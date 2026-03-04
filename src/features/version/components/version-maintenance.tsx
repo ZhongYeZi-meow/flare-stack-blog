@@ -13,10 +13,31 @@ export function VersionMaintenance() {
     onSuccess: (result) => {
       queryClient.setQueryData(VERSION_KEYS.updateCheck, result);
       if (result.error) {
-        toast.error("检查失败", {
-          description: "无法连接到 GitHub API，请稍后重试。",
-        });
-        return;
+        const reason = result.error.reason;
+        switch (reason) {
+          case "UNAUTHENTICATED":
+            toast.error("请先登录", {
+              description: "登录后才能检查更新",
+            });
+            return;
+          case "PERMISSION_DENIED":
+            toast.error("权限不足", {
+              description: "仅管理员可检查更新",
+            });
+            return;
+          case "FETCH_FAILED":
+            toast.error("检查失败", {
+              description: "无法连接到 GitHub API，请稍后重试。",
+            });
+            return;
+          default: {
+            reason satisfies never;
+            toast.error("检查失败", {
+              description: "未知错误",
+            });
+            return;
+          }
+        }
       }
       if (result.data.hasUpdate) {
         toast.info("发现新版本", {
@@ -26,11 +47,11 @@ export function VersionMaintenance() {
             onClick: () => window.open(result.data.releaseUrl, "_blank"),
           },
         });
-      } else {
-        toast.success("系统已是最新", {
-          description: `当前版本 v${__APP_VERSION__} 为最新版本。`,
-        });
+        return;
       }
+      toast.success("系统已是最新", {
+        description: `当前版本 v${__APP_VERSION__} 为最新版本。`,
+      });
     },
   });
 
