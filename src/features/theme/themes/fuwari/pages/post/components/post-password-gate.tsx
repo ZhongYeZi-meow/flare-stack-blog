@@ -47,39 +47,42 @@ export function PostPasswordGate({ post, onUnlocked }: PostPasswordGateProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-6">
-      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-black/5 dark:bg-white/10 mb-6">
-        <Lock size={28} className="fuwari-text-50" />
-      </div>
-      <h2 className="text-2xl font-bold fuwari-text-90 mb-2">
-        {m.post_password_protected_title()}
-      </h2>
-      <p className="text-sm fuwari-text-50 mb-8 text-center max-w-sm">
-        {m.post_password_protected_desc()}
-      </p>
-      <form onSubmit={handleSubmit} className="w-full max-w-xs space-y-4">
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            if (error) setError("");
-          }}
-          placeholder={m.post_password_input_placeholder()}
-          className="w-full px-4 py-2.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-sm fuwari-text-75 placeholder:fuwari-text-30 focus:outline-none focus:ring-2 focus:ring-(--fuwari-primary)/50 transition"
-          autoFocus
-        />
+    <div className="relative">
+      {/* Gradient fade overlay */}
+      <div className="h-24 bg-gradient-to-b from-transparent to-(--fuwari-card-bg, var(--background))" />
+
+      {/* Password prompt */}
+      <div className="flex flex-col items-center pb-10 pt-2 px-6">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-black/5 dark:bg-white/10 mb-4">
+          <Lock size={20} className="fuwari-text-50" />
+        </div>
+        <p className="text-sm fuwari-text-50 mb-6 text-center max-w-sm">
+          {m.post_password_protected_desc()}
+        </p>
+        <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full max-w-sm">
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (error) setError("");
+            }}
+            placeholder={m.post_password_input_placeholder()}
+            className="flex-1 px-4 py-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-sm fuwari-text-75 placeholder:fuwari-text-30 focus:outline-none focus:ring-2 focus:ring-(--fuwari-primary)/50 transition"
+            autoFocus
+          />
+          <button
+            type="submit"
+            disabled={loading || !password.trim()}
+            className="px-5 py-2 rounded-lg bg-(--fuwari-primary) text-white text-sm font-medium transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+          >
+            {loading ? "..." : m.post_password_submit()}
+          </button>
+        </form>
         {error && (
-          <p className="text-xs text-red-500 dark:text-red-400">{error}</p>
+          <p className="text-xs text-red-500 dark:text-red-400 mt-2">{error}</p>
         )}
-        <button
-          type="submit"
-          disabled={loading || !password.trim()}
-          className="w-full px-4 py-2.5 rounded-lg bg-(--fuwari-primary) text-white text-sm font-medium transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading ? "..." : m.post_password_submit()}
-        </button>
-      </form>
+      </div>
     </div>
   );
 }
