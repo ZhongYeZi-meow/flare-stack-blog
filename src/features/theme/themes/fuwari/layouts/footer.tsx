@@ -20,25 +20,7 @@ export function Footer(_: FooterProps) {
               year: currentYear.toString(),
               author: siteConfig.author,
             })}
-          </ClientOnly>{" "}
-          /{" "}
-          <a
-            href="/rss.xml"
-            target="_blank"
-            rel="noreferrer"
-            className="fuwari-expand-animation rounded-md px-1 -m-1 font-medium hover:text-(--fuwari-primary) text-(--fuwari-primary)"
-          >
-            RSS
-          </a>{" "}
-          /{" "}
-          <a
-            href="/sitemap.xml"
-            target="_blank"
-            rel="noreferrer"
-            className="fuwari-expand-animation rounded-md px-1 -m-1 font-medium hover:text-(--fuwari-primary) text-(--fuwari-primary)"
-          >
-            Sitemap
-          </a>
+          </ClientOnly>
           <br />
           {m.footer_powered_by()}{" "}
           <a
