@@ -49,8 +49,8 @@ export function Profile() {
                 <a
                   key={`${link.platform}-${i}`}
                   href={href}
-                  target={link.platform === "email" ? undefined : "_blank"}
-                  rel={link.platform === "email" ? undefined : "me noreferrer"}
+                  target={link.platform === "email" || link.platform === "qq" ? undefined : "_blank"}
+                  rel={link.platform === "email" || link.platform === "qq" ? undefined : "me noreferrer"}
                   aria-label={label}
                   className="fuwari-btn-regular rounded-lg h-10 w-10 active:scale-90 hover:text-(--fuwari-primary) transition-colors"
                 >
