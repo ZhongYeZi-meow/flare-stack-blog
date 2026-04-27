@@ -115,7 +115,7 @@ export function SiteSettingsSection() {
         <AssetUploadField
           name="site.icons.faviconIco"
           assetPath="favicon/favicon.ico"
-          accept=".ico"
+          accept=".ico,image/x-icon,image/vnd.microsoft.icon"
           readOnly
           label={m.settings_site_field_favicon_ico()}
           error={errors.site?.icons?.faviconIco?.message}
