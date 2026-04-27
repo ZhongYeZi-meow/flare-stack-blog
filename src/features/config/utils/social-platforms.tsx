@@ -5,6 +5,7 @@ export const SOCIAL_PLATFORM_KEYS = [
   "twitter",
   "discord",
   "bilibili",
+  "qq",
   "email",
   "rss",
   "custom",
@@ -17,6 +18,26 @@ export interface SocialLink {
   url: string;
   icon?: string; // R2 path, only for "custom"
   label?: string; // tooltip, only for "custom"
+}
+
+function QQIcon({
+  size = 24,
+  strokeWidth: _strokeWidth,
+}: {
+  size?: number;
+  strokeWidth?: number;
+}) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M21.395 15.035a39.548 39.548 0 0 0-1.51-4.228c.008-.083.013-.166.013-.25 0-4.93-3.56-8.935-7.949-8.935S3.999 5.628 3.999 10.557c0 .085.005.17.014.254a39.675 39.675 0 0 0-1.517 4.224c-.566 2.04-.87 3.233.091 3.674.752.345 1.622-.258 2.476-1.097.15.378.32.742.51 1.088-.396.4-.756.907-.756 1.467 0 1.246 1.832 1.828 4.092 1.912.053.31.182.597.378.838-.172.088-.287.263-.287.463 0 .288.233.521.52.521h4.917a.52.52 0 0 0 .52-.521c0-.2-.114-.375-.285-.462.194-.24.322-.525.377-.834 2.248-.09 4.065-.674 4.065-1.917 0-.555-.352-1.058-.743-1.456.187-.343.354-.703.5-1.078.852.835 1.717 1.432 2.467 1.088.96-.44.656-1.634.091-3.673zM7.272 14.001a.857.857 0 0 1-.835-.666c-.237-1.024-.05-2.327.465-3.4a.857.857 0 0 1 1.583.652c-.36.75-.49 1.728-.378 2.337a.858.858 0 0 1-.835 1.077zm9.503 0a.858.858 0 0 1-.834-1.077c.111-.608-.019-1.587-.378-2.337a.857.857 0 1 1 1.584-.652c.514 1.073.701 2.376.464 3.4a.857.857 0 0 1-.836.666z" />
+    </svg>
+  );
 }
 
 function DiscordIcon({
@@ -68,8 +89,10 @@ export function resolveSocialHref(
   }
   if (
     platform === "rss" ||
+    platform === "qq" ||
     url.startsWith("http://") ||
     url.startsWith("https://") ||
+    url.startsWith("mqqapi://") ||
     url.startsWith("/")
   ) {
     return url;
@@ -90,6 +113,7 @@ export const SOCIAL_PLATFORMS: Record<
   twitter: { icon: Twitter, label: "Twitter / X" },
   discord: { icon: DiscordIcon, label: "Discord" },
   bilibili: { icon: BilibiliIcon, label: "Bilibili" },
+  qq: { icon: QQIcon, label: "QQ" },
   email: { icon: Mail, label: "Email" },
   rss: { icon: Rss, label: "RSS" },
 };
