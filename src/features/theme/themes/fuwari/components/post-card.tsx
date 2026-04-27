@@ -5,6 +5,7 @@ import {
   Clock,
   Eye,
   Flame,
+  Lock,
   Pin,
   Tag,
 } from "lucide-react";
@@ -138,6 +139,12 @@ export function PostCard({
             <Clock size={14} />
             {m.read_time({ count: post.readTimeInMinutes })}
           </span>
+          {post.isPasswordProtected && (
+            <span className="inline-flex items-center gap-1.5 text-amber-500 dark:text-amber-400">
+              <Lock size={14} />
+              {m.post_password_protected_title()}
+            </span>
+          )}
           {isLoadingViews ? (
             <span className="inline-flex items-center gap-1.5">
               <Eye size={15} />

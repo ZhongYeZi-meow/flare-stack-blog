@@ -170,6 +170,7 @@ export async function getPostsCursor(
       status: PostsTable.status,
       publishedAt: PostsTable.publishedAt,
       pinnedAt: PostsTable.pinnedAt,
+      accessPassword: PostsTable.accessPassword,
       createdAt: PostsTable.createdAt,
       updatedAt: PostsTable.updatedAt,
     })
@@ -189,7 +190,11 @@ export async function getPostsCursor(
 
   // Check if there's a next page
   const hasMore = itemsWithPotentialNext.length > limit;
-  const items = itemsWithPotentialNext.slice(0, limit) as Array<PostListItem>;
+  const rawItems = itemsWithPotentialNext.slice(0, limit);
+  const items = rawItems.map(({ accessPassword, ...rest }) => ({
+    ...rest,
+    isPasswordProtected: !!accessPassword,
+  })) as Array<PostListItem>;
 
   // Fetch tags for all items
   if (items.length > 0) {
@@ -302,6 +307,7 @@ export async function findPinnedPosts(db: DB) {
       status: true,
       publishedAt: true,
       pinnedAt: true,
+      accessPassword: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -312,9 +318,10 @@ export async function findPinnedPosts(db: DB) {
     },
   });
 
-  return posts.map((p) => ({
+  return posts.map(({ accessPassword, postTags, ...p }) => ({
     ...p,
-    tags: p.postTags.map((pt) => pt.tag),
+    tags: postTags.map((pt) => pt.tag),
+    isPasswordProtected: !!accessPassword,
   }));
 }
 
@@ -335,6 +342,7 @@ export async function findPostsBySlugs(db: DB, slugs: string[]) {
       status: true,
       publishedAt: true,
       pinnedAt: true,
+      accessPassword: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -345,9 +353,10 @@ export async function findPostsBySlugs(db: DB, slugs: string[]) {
     },
   });
 
-  return posts.map((p) => ({
+  return posts.map(({ accessPassword, postTags, ...p }) => ({
     ...p,
-    tags: p.postTags.map((pt) => pt.tag),
+    tags: postTags.map((pt) => pt.tag),
+    isPasswordProtected: !!accessPassword,
   }));
 }
 

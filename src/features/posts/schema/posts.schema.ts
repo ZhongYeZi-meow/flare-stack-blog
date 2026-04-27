@@ -31,15 +31,20 @@ export const PostUpdateSchema = createUpdateSchema(PostsTable, {
 
 export const PostItemSchema = PostSelectSchema.omit({
   contentJson: true,
+  accessPassword: true,
 }).extend({
   tags: z.array(TagSelectSchema).optional(),
+  isPasswordProtected: z.boolean().optional(),
 });
 export const PostListResponseSchema = z.object({
   items: z.array(PostItemSchema),
   nextCursor: z.number().nullable(),
 });
-export const PostWithTocSchema = PostSelectSchema.extend({
+export const PostWithTocSchema = PostSelectSchema.omit({
+  accessPassword: true,
+}).extend({
   tags: z.array(TagSelectSchema).optional(),
+  isPasswordProtected: z.boolean().optional(),
   toc: z.array(
     z.object({
       id: z.string(),
@@ -110,6 +115,12 @@ export const StartPostProcessInputSchema = z.object({
   clientToday: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
 });
 
+export const VerifyPostPasswordInputSchema = z.object({
+  slug: z.string(),
+  password: z.string(),
+});
+export type VerifyPostPasswordInput = z.infer<typeof VerifyPostPasswordInputSchema>;
+
 export type GenerateSlugInput = z.infer<typeof GenerateSlugInputSchema>;
 export type GetPostsInput = z.infer<typeof GetPostsInputSchema>;
 export type GetPostsCountInput = z.infer<typeof GetPostsCountInputSchema>;
@@ -118,8 +129,9 @@ export type UpdatePostInput = z.infer<typeof UpdatePostInputSchema>;
 export type DeletePostInput = z.infer<typeof DeletePostInputSchema>;
 export type PreviewSummaryInput = z.infer<typeof PreviewSummaryInputSchema>;
 export type StartPostProcessInput = z.infer<typeof StartPostProcessInputSchema>;
-export type PostListItem = Omit<Post, "contentJson" | "publicContentJson"> & {
+export type PostListItem = Omit<Post, "contentJson" | "publicContentJson" | "accessPassword"> & {
   tags?: Array<Tag>;
+  isPasswordProtected?: boolean;
 };
 
 export type PostListResponse = z.infer<typeof PostListResponseSchema>;

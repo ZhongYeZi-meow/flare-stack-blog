@@ -16,6 +16,7 @@ import type {
   PreviewSummaryInput,
   StartPostProcessInput,
   UpdatePostInput,
+  VerifyPostPasswordInput,
 } from "@/features/posts/schema/posts.schema";
 import {
   POSTS_CACHE_KEYS,
@@ -113,10 +114,23 @@ export async function findPostBySlug(
       );
     }
 
+    const isPasswordProtected = !!post.accessPassword;
+    const { accessPassword: _pw, ...postWithoutPassword } = stripPublicContentJson(post);
+
+    if (isPasswordProtected) {
+      return {
+        ...postWithoutPassword,
+        contentJson: null,
+        toc: [],
+        isPasswordProtected: true,
+      };
+    }
+
     return {
-      ...stripPublicContentJson(post),
+      ...postWithoutPassword,
       contentJson,
       toc: generateTableOfContents(contentJson),
+      isPasswordProtected: false,
     };
   };
 
@@ -125,6 +139,44 @@ export async function findPostBySlug(
   return await CacheService.get(context, cacheKey, PostWithTocSchema, fetcher, {
     ttl: "7d",
   });
+}
+
+export async function verifyPostPassword(
+  context: DbContext & { executionCtx: ExecutionContext },
+  data: VerifyPostPasswordInput,
+) {
+  const post = await PostRepo.findPostBySlug(context.db, data.slug, {
+    publicOnly: true,
+  });
+  if (!post) return null;
+
+  if (!post.accessPassword || post.accessPassword !== data.password) {
+    return { success: false as const };
+  }
+
+  let contentJson = post.publicContentJson ?? post.contentJson;
+  if (!post.publicContentJson && contentJson) {
+    contentJson = await highlightCodeBlocks(contentJson);
+    context.executionCtx.waitUntil(
+      PostRepo.updatePublicContentSnapshot(
+        context.db,
+        post.id,
+        contentJson,
+      ).then(() => undefined),
+    );
+  }
+
+  const { accessPassword: _pw, ...postWithoutPassword } = stripPublicContentJson(post);
+
+  return {
+    success: true as const,
+    post: {
+      ...postWithoutPassword,
+      contentJson,
+      toc: generateTableOfContents(contentJson),
+      isPasswordProtected: true,
+    },
+  };
 }
 
 export async function getRelatedPosts(

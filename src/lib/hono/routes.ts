@@ -7,6 +7,7 @@ import { handleImageRequest } from "@/features/media/service/media.service";
 import postsDetailRoute from "@/features/posts/api/hono/posts.detail.route";
 import postsListRoute from "@/features/posts/api/hono/posts.list.route";
 import postsRelatedRoute from "@/features/posts/api/hono/posts.related.route";
+import postsVerifyPasswordRoute from "@/features/posts/api/hono/posts.verify-password.route";
 import searchRoute from "@/features/search/api/hono/search.route";
 import siteDocumentsRoute from "@/features/site-documents/api/hono/site-documents.route";
 import tagsRoute from "@/features/tags/api/hono/tags.list.route";
@@ -35,6 +36,7 @@ async function forwardAuthRequest(c: Context<{ Bindings: Env }>) {
 const publicApi = new Hono<{ Bindings: Env }>()
   .route("/posts", postsListRoute)
   .route("/post", postsDetailRoute)
+  .route("/post", postsVerifyPasswordRoute)
   .route("/post", postsRelatedRoute)
   .route("/tags", tagsRoute)
   .route("/search", searchRoute);

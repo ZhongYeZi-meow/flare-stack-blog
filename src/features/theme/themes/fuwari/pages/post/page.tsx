@@ -1,17 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, FileText, Pencil } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
+import type { PostWithToc } from "@/features/posts/schema/posts.schema";
 import type { PostPageProps } from "@/features/theme/contract/pages";
 import { FuwariCommentSection } from "@/features/theme/themes/fuwari/components/comments/view/comment-section";
 import { ContentRenderer } from "@/features/theme/themes/fuwari/components/content/content-renderer";
 import { authClient } from "@/lib/auth/auth.client";
 import { m } from "@/paraglide/messages";
 import { PostMeta } from "./components/post-meta";
+import { PostPasswordGate } from "./components/post-password-gate";
 import { PostSummary } from "./components/post-summary";
 import { RelatedPosts, RelatedPostsSkeleton } from "./components/related-posts";
 import TableOfContents from "./components/table-of-contents";
 
-export function PostPage({ post }: PostPageProps) {
+export function PostPage({ post: initialPost }: PostPageProps) {
+  const [post, setPost] = useState<Exclude<PostWithToc, null>>(initialPost);
   const { data: session } = authClient.useSession();
   // Approximate word count
   const wordCount = post.readTimeInMinutes * 300;
@@ -85,19 +88,25 @@ export function PostPage({ post }: PostPageProps) {
         {/* Summary */}
         <PostSummary summary={post.summary} />
 
-        {/* Markdown Content */}
-        <div className="mb-6 prose dark:prose-invert prose-base max-w-none! fuwari-custom-md">
-          <ContentRenderer content={post.contentJson} />
-        </div>
+        {post.isPasswordProtected && !post.contentJson ? (
+          <PostPasswordGate post={post} onUnlocked={setPost} />
+        ) : (
+          <>
+            {/* Markdown Content */}
+            <div className="mb-6 prose dark:prose-invert prose-base max-w-none! fuwari-custom-md">
+              <ContentRenderer content={post.contentJson} />
+            </div>
 
-        {/* End of Content Notice */}
-        <div className="my-8 flex items-center justify-center w-full">
-          <div className="h-px w-full bg-linear-to-r from-transparent via-(--fuwari-meta-divider) to-transparent opacity-20" />
-          <span className="mx-4 text-sm font-mono tracking-widest text-(--fuwari-meta-divider) opacity-50 whitespace-nowrap">
-            END
-          </span>
-          <div className="h-px w-full bg-linear-to-r from-(--fuwari-meta-divider) via-transparent to-transparent opacity-20" />
-        </div>
+            {/* End of Content Notice */}
+            <div className="my-8 flex items-center justify-center w-full">
+              <div className="h-px w-full bg-linear-to-r from-transparent via-(--fuwari-meta-divider) to-transparent opacity-20" />
+              <span className="mx-4 text-sm font-mono tracking-widest text-(--fuwari-meta-divider) opacity-50 whitespace-nowrap">
+                END
+              </span>
+              <div className="h-px w-full bg-linear-to-r from-(--fuwari-meta-divider) via-transparent to-transparent opacity-20" />
+            </div>
+          </>
+        )}
       </div>
 
       {/* Prev/Next buttons (Mock implementation for layout, actual data would come from the server in an ideal setup) */}

@@ -10,6 +10,7 @@ export interface PostEditorData {
   contentJson: JSONContent | null;
   publishedAt: Date | null;
   pinnedAt: Date | null;
+  accessPassword: string | null;
   tagIds: Array<number>;
   isSynced: boolean;
   hasPublicCache: boolean;
@@ -31,6 +32,7 @@ export const defaultPostData: PostEditorData = {
   contentJson: null,
   publishedAt: null,
   pinnedAt: null,
+  accessPassword: null,
   tagIds: [],
   isSynced: true,
   hasPublicCache: false,
