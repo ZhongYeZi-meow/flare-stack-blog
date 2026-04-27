@@ -42,7 +42,7 @@ export function SocialLinksEditor() {
               <div className="flex-1 min-w-0">
                 <Input
                   {...register(`site.social.${index}.url`)}
-                  placeholder={m.settings_social_url_ph()}
+                  placeholder={platform === "qq" ? "mqqapi://... 或 QQ号" : m.settings_social_url_ph()}
                 />
               </div>
 
