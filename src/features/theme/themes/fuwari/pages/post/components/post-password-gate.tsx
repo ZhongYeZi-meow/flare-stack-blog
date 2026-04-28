@@ -1,5 +1,6 @@
 import { Lock } from "lucide-react";
 import { useState } from "react";
+import { PostWithTocSchema } from "@/features/posts/schema/posts.schema";
 import type { PostWithToc } from "@/features/posts/schema/posts.schema";
 import { m } from "@/paraglide/messages";
 
@@ -32,10 +33,18 @@ export function PostPasswordGate({ post, onUnlocked }: PostPasswordGateProps) {
         return;
       }
 
-      const data = await res.json();
+      const data = (await res.json()) as {
+        success?: boolean;
+        post?: unknown;
+      };
 
       if (data.success && data.post) {
-        onUnlocked(data.post);
+        const parsed = PostWithTocSchema.parse(data.post);
+        if (parsed) {
+          onUnlocked(parsed);
+        } else {
+          setError(m.post_password_incorrect());
+        }
       } else {
         setError(m.post_password_incorrect());
       }
