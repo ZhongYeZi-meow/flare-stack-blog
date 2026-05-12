@@ -3,6 +3,7 @@ import { getSystemConfigFn } from "../api/config.api";
 import {
   getAboutPageConfigFn,
   getCommentsEnabledFn,
+  getNewsletterEnabledFn,
   getSiteConfigFn,
   getSiteDomainFn,
 } from "../api/site.api";
@@ -16,6 +17,7 @@ export const CONFIG_KEYS = {
   siteDomain: ["config", "siteDomain"] as const,
   aboutPage: ["config", "aboutPage"] as const,
   commentsEnabled: ["config", "commentsEnabled"] as const,
+  newsletterEnabled: ["config", "newsletterEnabled"] as const,
 };
 
 export const systemConfigQuery = queryOptions({
@@ -41,4 +43,9 @@ export const aboutPageQuery = queryOptions({
 export const commentsEnabledQuery = queryOptions({
   queryKey: CONFIG_KEYS.commentsEnabled,
   queryFn: () => getCommentsEnabledFn(),
+});
+
+export const newsletterEnabledQuery = queryOptions({
+  queryKey: CONFIG_KEYS.newsletterEnabled,
+  queryFn: () => getNewsletterEnabledFn(),
 });

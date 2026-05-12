@@ -1505,6 +1505,8 @@
   "admin_about_empty_hint": "No sections yet. Click \"Add Section\" to start building your About page.",
   "settings_comments_enabled": "Enable Comments",
   "settings_comments_enabled_hint": "Allow visitors to comment on posts. When disabled, the comment section will be hidden on all posts.",
+  "settings_newsletter_enabled": "Enable Newsletter",
+  "settings_newsletter_enabled_hint": "Show the newsletter subscription widget in the sidebar. Visitors can subscribe to receive update notifications via email.",
   "share_twitter": "Share on X",
   "share_copy_link": "Copy link",
   "share_more": "Share",

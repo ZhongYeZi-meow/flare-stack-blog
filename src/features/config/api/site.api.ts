@@ -27,3 +27,10 @@ export const getCommentsEnabledFn = createServerFn()
     const config = await ConfigService.getSystemConfig(context);
     return config.commentsEnabled ?? true;
   });
+
+export const getNewsletterEnabledFn = createServerFn()
+  .middleware([dbMiddleware])
+  .handler(async ({ context }) => {
+    const config = await ConfigService.getSystemConfig(context);
+    return config.newsletterEnabled ?? false;
+  });

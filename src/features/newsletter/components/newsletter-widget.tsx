@@ -1,11 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Mail, Send } from "lucide-react";
 import { useState } from "react";
+import { newsletterEnabledQuery } from "@/features/config/queries";
 import { cn } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 import { subscribeFn } from "../api/newsletter.api";
 
 export function NewsletterWidget({ className }: { className?: string }) {
+  const { data: enabled } = useQuery(newsletterEnabledQuery);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -16,6 +18,8 @@ export function NewsletterWidget({ className }: { className?: string }) {
       setEmail("");
     },
   });
+
+  if (!enabled) return null;
 
   if (submitted) {
     return (

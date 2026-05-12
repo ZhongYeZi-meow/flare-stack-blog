@@ -47,6 +47,7 @@ export const SystemConfigSchema = z.object({
     .optional(),
   site: SiteConfigInputSchema.optional(),
   commentsEnabled: z.boolean().optional(),
+  newsletterEnabled: z.boolean().optional(),
   pages: z
     .object({
       about: z
@@ -64,6 +65,7 @@ export const createSystemConfigFormSchema = (messages: Messages) =>
     notification: SystemConfigSchema.shape.notification,
     site: createSiteConfigInputFormSchema(messages).optional(),
     commentsEnabled: z.boolean().optional(),
+    newsletterEnabled: z.boolean().optional(),
     pages: SystemConfigSchema.shape.pages,
   });
 
@@ -97,6 +99,7 @@ export const DEFAULT_CONFIG: SystemConfig = {
   },
   site: blogConfig satisfies SiteConfigInput,
   commentsEnabled: true,
+  newsletterEnabled: false,
   pages: {
     about: {
       sections: [],

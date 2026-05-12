@@ -165,6 +165,7 @@ export function SiteSettingsSection() {
       </SectionShell>
 
       <CommentsToggleSection />
+      <NewsletterToggleSection />
     </div>
   );
 }
@@ -192,6 +193,36 @@ function CommentsToggleSection() {
           />
           <span className="text-sm text-foreground">
             {m.settings_comments_enabled()}
+          </span>
+        </label>
+      </div>
+    </section>
+  );
+}
+
+function NewsletterToggleSection() {
+  const { field } = useController<SystemConfig, "newsletterEnabled">({
+    name: "newsletterEnabled",
+  });
+
+  return (
+    <section className="border border-border/30 bg-background/50 overflow-hidden">
+      <div className="p-8 space-y-2 border-b border-border/20">
+        <h3 className="text-lg font-medium text-foreground">
+          {m.settings_newsletter_enabled()}
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          {m.settings_newsletter_enabled_hint()}
+        </p>
+      </div>
+      <div className="p-8">
+        <label className="flex items-center gap-3 cursor-pointer">
+          <Checkbox
+            checked={field.value ?? false}
+            onCheckedChange={(checked) => field.onChange(checked)}
+          />
+          <span className="text-sm text-foreground">
+            {m.settings_newsletter_enabled()}
           </span>
         </label>
       </div>

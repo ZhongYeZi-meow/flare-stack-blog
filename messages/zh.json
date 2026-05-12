@@ -1497,6 +1497,8 @@
   "admin_about_empty_hint": "暂无区块，点击「添加区块」开始编辑关于页内容。",
   "settings_comments_enabled": "启用评论",
   "settings_comments_enabled_hint": "允许访客在文章下方发表评论。关闭后所有文章的评论区将被隐藏。",
+  "settings_newsletter_enabled": "启用邮件订阅",
+  "settings_newsletter_enabled_hint": "在侧栏显示邮件订阅组件，允许访客通过邮箱订阅更新通知。",
   "share_twitter": "分享到 X",
   "share_copy_link": "复制链接",
   "share_more": "分享",
