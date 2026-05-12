@@ -34,6 +34,24 @@ export const getPinnedPostsFn = createServerFn()
   .middleware([dbMiddleware])
   .handler(({ context }) => PostService.getPinnedPosts(context));
 
+export const getAdjacentPostsFn = createServerFn()
+  .middleware([dbMiddleware])
+  .inputValidator(
+    z.object({
+      publishedAt: z.string(),
+      postId: z.number(),
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    return await PostService.getAdjacentPosts(context, data);
+  });
+
+export const getArchivePostsFn = createServerFn()
+  .middleware([dbMiddleware])
+  .handler(async ({ context }) => {
+    return await PostService.getArchivePosts(context);
+  });
+
 export const getPopularPostsFn = createServerFn()
   .middleware([dbMiddleware])
   .inputValidator(

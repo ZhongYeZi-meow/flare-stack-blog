@@ -1,8 +1,10 @@
 import {
   and,
+  asc,
   count,
   desc,
   eq,
+  gt,
   inArray,
   isNotNull,
   like,
@@ -70,6 +72,8 @@ export async function getPosts(
       pinnedAt: PostsTable.pinnedAt,
       accessPassword: PostsTable.accessPassword,
       commentDisabled: PostsTable.commentDisabled,
+      seriesId: PostsTable.seriesId,
+      seriesOrder: PostsTable.seriesOrder,
       createdAt: PostsTable.createdAt,
       updatedAt: PostsTable.updatedAt,
     })
@@ -174,6 +178,8 @@ export async function getPostsCursor(
       pinnedAt: PostsTable.pinnedAt,
       accessPassword: PostsTable.accessPassword,
       commentDisabled: PostsTable.commentDisabled,
+      seriesId: PostsTable.seriesId,
+      seriesOrder: PostsTable.seriesOrder,
       createdAt: PostsTable.createdAt,
       updatedAt: PostsTable.updatedAt,
     })
@@ -312,6 +318,8 @@ export async function findPinnedPosts(db: DB) {
       pinnedAt: true,
       accessPassword: true,
       commentDisabled: true,
+      seriesId: true,
+      seriesOrder: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -348,6 +356,8 @@ export async function findPostsBySlugs(db: DB, slugs: string[]) {
       pinnedAt: true,
       accessPassword: true,
       commentDisabled: true,
+      seriesId: true,
+      seriesOrder: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -390,6 +400,75 @@ export async function findPostBySlug(
   const tags = post.postTags.map((pt) => pt.tag);
   const { postTags, ...rest } = post;
   return { ...rest, tags };
+}
+
+export async function getAdjacentPosts(
+  db: DB,
+  publishedAt: Date | string,
+  postId: number,
+) {
+  const pubDate =
+    typeof publishedAt === "string" ? new Date(publishedAt) : publishedAt;
+
+  const [prevPost] = await db
+    .select({
+      id: PostsTable.id,
+      title: PostsTable.title,
+      slug: PostsTable.slug,
+    })
+    .from(PostsTable)
+    .where(
+      and(
+        eq(PostsTable.status, "published"),
+        isNotNull(PostsTable.publishedAt),
+        or(
+          lt(PostsTable.publishedAt, pubDate),
+          and(eq(PostsTable.publishedAt, pubDate), lt(PostsTable.id, postId)),
+        ),
+      ),
+    )
+    .orderBy(desc(PostsTable.publishedAt), desc(PostsTable.id))
+    .limit(1);
+
+  const [nextPost] = await db
+    .select({
+      id: PostsTable.id,
+      title: PostsTable.title,
+      slug: PostsTable.slug,
+    })
+    .from(PostsTable)
+    .where(
+      and(
+        eq(PostsTable.status, "published"),
+        isNotNull(PostsTable.publishedAt),
+        or(
+          gt(PostsTable.publishedAt, pubDate),
+          and(eq(PostsTable.publishedAt, pubDate), gt(PostsTable.id, postId)),
+        ),
+      ),
+    )
+    .orderBy(asc(PostsTable.publishedAt), asc(PostsTable.id))
+    .limit(1);
+
+  return {
+    prev: prevPost ?? null,
+    next: nextPost ?? null,
+  };
+}
+
+export async function getArchivePosts(db: DB) {
+  return await db
+    .select({
+      id: PostsTable.id,
+      title: PostsTable.title,
+      slug: PostsTable.slug,
+      publishedAt: PostsTable.publishedAt,
+    })
+    .from(PostsTable)
+    .where(
+      and(eq(PostsTable.status, "published"), isNotNull(PostsTable.publishedAt)),
+    )
+    .orderBy(desc(PostsTable.publishedAt));
 }
 
 export async function updatePost(

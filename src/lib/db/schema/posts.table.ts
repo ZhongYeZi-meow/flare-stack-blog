@@ -31,6 +31,10 @@ export const PostsTable = sqliteTable(
     commentDisabled: integer("comment_disabled", { mode: "boolean" })
       .default(false)
       .notNull(),
+    seriesId: integer("series_id").references(() => SeriesTable.id, {
+      onDelete: "set null",
+    }),
+    seriesOrder: integer("series_order").default(0).notNull(),
     createdAt,
     updatedAt,
   },
@@ -39,6 +43,15 @@ export const PostsTable = sqliteTable(
     index("created_at_idx").on(table.createdAt),
   ],
 );
+
+export const SeriesTable = sqliteTable("series", {
+  id,
+  title: text().notNull(),
+  slug: text().notNull().unique(),
+  description: text(),
+  createdAt,
+  updatedAt,
+});
 
 export const TagsTable = sqliteTable("tags", {
   id,
@@ -63,8 +76,16 @@ export const PostTagsTable = sqliteTable(
 );
 
 // ==================== relations ====================
-export const postsRelations = relations(PostsTable, ({ many }) => ({
+export const postsRelations = relations(PostsTable, ({ many, one }) => ({
   postTags: many(PostTagsTable),
+  series: one(SeriesTable, {
+    fields: [PostsTable.seriesId],
+    references: [SeriesTable.id],
+  }),
+}));
+
+export const seriesRelations = relations(SeriesTable, ({ many }) => ({
+  posts: many(PostsTable),
 }));
 
 export const tagsRelations = relations(TagsTable, ({ many }) => ({
@@ -84,5 +105,6 @@ export const postTagsRelations = relations(PostTagsTable, ({ one }) => ({
 
 // ==================== types ====================
 export type Tag = typeof TagsTable.$inferSelect;
+export type Series = typeof SeriesTable.$inferSelect;
 export type Post = typeof PostsTable.$inferSelect;
 export type PostStatus = (typeof POST_STATUSES)[number];

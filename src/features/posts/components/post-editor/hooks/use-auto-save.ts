@@ -42,7 +42,9 @@ export function useAutoSave({
     pinnedAt: number | null;
     accessPassword: string | null;
     commentDisabled: boolean;
-    tagIds: string; // Serialize for easy comparison
+    seriesId: number | null;
+    seriesOrder: number;
+    tagIds: string;
     contentRef: PostEditorData["contentJson"];
   } | null>(null);
   // Store onSave in ref to avoid effect re-running when onSave reference changes
@@ -59,6 +61,8 @@ export function useAutoSave({
     pinnedAt: p.pinnedAt ? p.pinnedAt.valueOf() : null,
     accessPassword: p.accessPassword,
     commentDisabled: p.commentDisabled,
+    seriesId: p.seriesId,
+    seriesOrder: p.seriesOrder,
     tagIds: [...p.tagIds].sort().join(","),
     contentRef: p.contentJson,
   });
@@ -76,6 +80,8 @@ export function useAutoSave({
       prev.pinnedAt !== curr.pinnedAt ||
       prev.accessPassword !== curr.accessPassword ||
       prev.commentDisabled !== curr.commentDisabled ||
+      prev.seriesId !== curr.seriesId ||
+      prev.seriesOrder !== curr.seriesOrder ||
       prev.tagIds !== curr.tagIds ||
       prev.contentRef !== curr.contentRef
     );

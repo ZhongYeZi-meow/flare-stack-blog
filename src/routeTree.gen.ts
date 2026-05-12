@@ -23,6 +23,7 @@ import { Route as PublicSearchRouteImport } from './routes/_public/search'
 import { Route as PublicPostsRouteImport } from './routes/_public/posts'
 import { Route as PublicGuestbookRouteImport } from './routes/_public/guestbook'
 import { Route as PublicFriendLinksRouteImport } from './routes/_public/friend-links'
+import { Route as PublicArchiveRouteImport } from './routes/_public/archive'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as AuthVerifyEmailRouteImport } from './routes/_auth/verify-email'
 import { Route as AuthResetLinkRouteImport } from './routes/_auth/reset-link'
@@ -106,6 +107,11 @@ const PublicGuestbookRoute = PublicGuestbookRouteImport.update({
 const PublicFriendLinksRoute = PublicFriendLinksRouteImport.update({
   id: '/friend-links',
   path: '/friend-links',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const PublicArchiveRoute = PublicArchiveRouteImport.update({
+  id: '/archive',
+  path: '/archive',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicAboutRoute = PublicAboutRouteImport.update({
@@ -204,6 +210,7 @@ export interface FileRoutesByFullPath {
   '/reset-link': typeof AuthResetLinkRoute
   '/verify-email': typeof AuthVerifyEmailRoute
   '/about': typeof PublicAboutRoute
+  '/archive': typeof PublicArchiveRoute
   '/friend-links': typeof PublicFriendLinksRoute
   '/guestbook': typeof PublicGuestbookRoute
   '/posts': typeof PublicPostsRoute
@@ -232,6 +239,7 @@ export interface FileRoutesByTo {
   '/reset-link': typeof AuthResetLinkRoute
   '/verify-email': typeof AuthVerifyEmailRoute
   '/about': typeof PublicAboutRoute
+  '/archive': typeof PublicArchiveRoute
   '/friend-links': typeof PublicFriendLinksRoute
   '/guestbook': typeof PublicGuestbookRoute
   '/posts': typeof PublicPostsRoute
@@ -265,6 +273,7 @@ export interface FileRoutesById {
   '/_auth/reset-link': typeof AuthResetLinkRoute
   '/_auth/verify-email': typeof AuthVerifyEmailRoute
   '/_public/about': typeof PublicAboutRoute
+  '/_public/archive': typeof PublicArchiveRoute
   '/_public/friend-links': typeof PublicFriendLinksRoute
   '/_public/guestbook': typeof PublicGuestbookRoute
   '/_public/posts': typeof PublicPostsRoute
@@ -298,6 +307,7 @@ export interface FileRouteTypes {
     | '/reset-link'
     | '/verify-email'
     | '/about'
+    | '/archive'
     | '/friend-links'
     | '/guestbook'
     | '/posts'
@@ -326,6 +336,7 @@ export interface FileRouteTypes {
     | '/reset-link'
     | '/verify-email'
     | '/about'
+    | '/archive'
     | '/friend-links'
     | '/guestbook'
     | '/posts'
@@ -358,6 +369,7 @@ export interface FileRouteTypes {
     | '/_auth/reset-link'
     | '/_auth/verify-email'
     | '/_public/about'
+    | '/_public/archive'
     | '/_public/friend-links'
     | '/_public/guestbook'
     | '/_public/posts'
@@ -486,6 +498,13 @@ declare module '@tanstack/react-router' {
       path: '/friend-links'
       fullPath: '/friend-links'
       preLoaderRoute: typeof PublicFriendLinksRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/archive': {
+      id: '/_public/archive'
+      path: '/archive'
+      fullPath: '/archive'
+      preLoaderRoute: typeof PublicArchiveRouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/_public/about': {
@@ -632,6 +651,7 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 
 interface PublicRouteRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
+  PublicArchiveRoute: typeof PublicArchiveRoute
   PublicFriendLinksRoute: typeof PublicFriendLinksRoute
   PublicGuestbookRoute: typeof PublicGuestbookRoute
   PublicPostsRoute: typeof PublicPostsRoute
@@ -643,6 +663,7 @@ interface PublicRouteRouteChildren {
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
+  PublicArchiveRoute: PublicArchiveRoute,
   PublicFriendLinksRoute: PublicFriendLinksRoute,
   PublicGuestbookRoute: PublicGuestbookRoute,
   PublicPostsRoute: PublicPostsRoute,

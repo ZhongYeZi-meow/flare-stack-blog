@@ -331,6 +331,17 @@ export async function getPostsCount(
   });
 }
 
+export async function getAdjacentPosts(
+  context: DbContext,
+  data: { publishedAt: string; postId: number },
+) {
+  return await PostRepo.getAdjacentPosts(context.db, data.publishedAt, data.postId);
+}
+
+export async function getArchivePosts(context: DbContext) {
+  return await PostRepo.getArchivePosts(context.db);
+}
+
 export async function findPostBySlugAdmin(
   context: DbContext,
   data: FindPostBySlugInput,

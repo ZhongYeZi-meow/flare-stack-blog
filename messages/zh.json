@@ -1496,5 +1496,22 @@
   "admin_about_save_error": "保存关于页失败",
   "admin_about_empty_hint": "暂无区块，点击「添加区块」开始编辑关于页内容。",
   "settings_comments_enabled": "启用评论",
-  "settings_comments_enabled_hint": "允许访客在文章下方发表评论。关闭后所有文章的评论区将被隐藏。"
+  "settings_comments_enabled_hint": "允许访客在文章下方发表评论。关闭后所有文章的评论区将被隐藏。",
+  "share_twitter": "分享到 X",
+  "share_copy_link": "复制链接",
+  "share_more": "分享",
+  "post_nav_prev": "上一篇",
+  "post_nav_next": "下一篇",
+  "post_views": "{count} 次浏览",
+  "nav_archive": "归档",
+  "archive_total": "共 {count} 篇文章",
+  "editor_meta_series": "系列",
+  "editor_meta_series_none": "无系列",
+  "editor_meta_series_order": "系列中的排序",
+  "series_toc_title": "本系列文章",
+  "newsletter_title": "邮件订阅",
+  "newsletter_desc": "订阅以获取新文章通知。",
+  "newsletter_placeholder": "你的邮箱",
+  "newsletter_subscribe": "订阅",
+  "newsletter_success": "订阅成功！有新文章时会通知你。"
 }

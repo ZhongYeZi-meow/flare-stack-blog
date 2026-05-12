@@ -4,6 +4,7 @@ export * from "./config.table";
 export * from "./friend-links.table";
 export * from "./guestbook.table";
 export * from "./media.table";
+export * from "./newsletter.table";
 export * from "./page-views.table";
 export * from "./post-revisions.table";
 export * from "./posts.table";

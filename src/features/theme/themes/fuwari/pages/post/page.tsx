@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Clock, FileText, Pencil } from "lucide-react";
+import { Clock, Eye, FileText, Pencil } from "lucide-react";
 import { Suspense, useState } from "react";
+import { useViewCounts } from "@/features/pageview/queries";
 import type { PostWithToc } from "@/features/posts/schema/posts.schema";
 import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
 import type { PostPageProps } from "@/features/theme/contract/pages";
@@ -11,17 +12,23 @@ import { m } from "@/paraglide/messages";
 import { PostMeta } from "./components/post-meta";
 import { PostPasswordGate } from "./components/post-password-gate";
 import { PostSummary } from "./components/post-summary";
+import { PostNavigation } from "./components/post-navigation";
+import { ReadingProgress } from "./components/reading-progress";
+import { SeriesNav } from "./components/series-nav";
 import { RelatedPosts, RelatedPostsSkeleton } from "./components/related-posts";
+import { ShareButtons } from "./components/share-buttons";
 import TableOfContents from "./components/table-of-contents";
 
 export function PostPage({ post: initialPost, commentsEnabled = true }: PostPageProps) {
   const [post, setPost] = useState<Exclude<PostWithToc, null>>(initialPost);
   const { data: session } = authClient.useSession();
-  // Approximate word count
+  const { data: viewCounts } = useViewCounts([post.slug]);
+  const viewCount = viewCounts?.[post.slug] ?? 0;
   const wordCount = post.readTimeInMinutes * 300;
 
   return (
     <div className="relative flex flex-col rounded-(--fuwari-radius-large) py-1 md:py-0 md:bg-transparent gap-4 mb-4 w-full">
+      <ReadingProgress />
       {/* Table Of Contents (Desktop Floating Right) */}
       <div
         className="hidden 2xl:block absolute top-0 h-full pl-4"
@@ -53,6 +60,16 @@ export function PostPage({ post: initialPost, commentsEnabled = true }: PostPage
               {m.read_time({ count: post.readTimeInMinutes })}
             </div>
           </div>
+          {viewCount > 0 && (
+            <div className="flex flex-row items-center">
+              <div className="transition h-6 w-6 rounded-md bg-black/5 dark:bg-white/10 fuwari-text-50 flex items-center justify-center mr-2">
+                <Eye strokeWidth={1.5} size={16} />
+              </div>
+              <div className="text-sm">
+                {m.post_views({ count: viewCount })}
+              </div>
+            </div>
+          )}
           {session?.user.role === "admin" && (
             <Link
               to="/admin/posts/edit/$id"
@@ -118,17 +135,23 @@ export function PostPage({ post: initialPost, commentsEnabled = true }: PostPage
         {/* Note: the backend schema doesn't currently provide prev/next slugs in PostWithToc. Using placeholder layouts to match Fuwari exactly. */}
       </div>
 
+      {/* Series Navigation */}
+      {post.seriesId && (
+        <SeriesNav seriesId={post.seriesId} currentPostId={post.id} />
+      )}
+
       {/* Related Posts */}
       <Suspense fallback={<RelatedPostsSkeleton />}>
         <RelatedPosts slug={post.slug} />
       </Suspense>
 
-      {/* Reactions */}
+      {/* Reactions & Share */}
       <div
-        className="fuwari-card-base p-6 fuwari-onload-animation"
+        className="fuwari-card-base p-6 fuwari-onload-animation flex items-center justify-between gap-4 flex-wrap"
         style={{ animationDelay: "400ms" }}
       >
         <ReactionPicker targetType="post" targetId={post.id} />
+        <ShareButtons title={post.title} />
       </div>
 
       {/* Comments Section */}
@@ -140,6 +163,14 @@ export function PostPage({ post: initialPost, commentsEnabled = true }: PostPage
           <FuwariCommentSection postId={post.id} />
         </div>
       )}
+
+      {/* Previous / Next Navigation */}
+      <div className="fuwari-onload-animation" style={{ animationDelay: "500ms" }}>
+        <PostNavigation
+          publishedAt={post.publishedAt}
+          postId={post.id}
+        />
+      </div>
     </div>
   );
 }

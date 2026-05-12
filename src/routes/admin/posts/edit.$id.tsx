@@ -75,6 +75,8 @@ function EditPost() {
     pinnedAt: post.pinnedAt,
     accessPassword: post.accessPassword ?? null,
     commentDisabled: post.commentDisabled ?? false,
+    seriesId: post.seriesId ?? null,
+    seriesOrder: post.seriesOrder ?? 0,
     isSynced: post.isSynced,
     hasPublicCache: post.hasPublicCache,
   };

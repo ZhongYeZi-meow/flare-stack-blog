@@ -17,6 +17,8 @@ import {
 import { findPostByIdFn } from "../api/posts.admin.api";
 import {
   findPostBySlugFn,
+  getAdjacentPostsFn,
+  getArchivePostsFn,
   getPinnedPostsFn,
   getPopularPostsFn,
   getPostsCursorFn,
@@ -162,6 +164,18 @@ export function postRevisionDetailQuery(postId: number, revisionId: number) {
       (await getPostRevisionFn({ data: { postId, revisionId } })) ?? null,
   });
 }
+
+export function adjacentPostsQuery(publishedAt: string, postId: number) {
+  return queryOptions({
+    queryKey: ["posts", "adjacent", postId],
+    queryFn: () => getAdjacentPostsFn({ data: { publishedAt, postId } }),
+  });
+}
+
+export const archivePostsQuery = queryOptions({
+  queryKey: ["posts", "archive"],
+  queryFn: () => getArchivePostsFn(),
+});
 
 export const pinnedPostsQuery = queryOptions({
   queryKey: POSTS_KEYS.pinned,

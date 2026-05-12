@@ -1,4 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import {
+  BookOpen,
   KeyRound,
   Loader2,
   MessageSquareOff,
@@ -10,6 +12,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { Checkbox } from "@/components/ui/checkbox";
 import DatePicker from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
+import { allSeriesQuery } from "@/features/series/queries";
 import { TagSelector } from "@/features/tags/components/tag-selector";
 import { POST_STATUSES } from "@/lib/db/schema";
 import { toLocalDateString } from "@/lib/utils";
@@ -46,6 +49,8 @@ export function PostEditorMetadata({
   onGenerateSummary,
   onGenerateTags,
 }: PostEditorMetadataProps) {
+  const { data: seriesList } = useQuery(allSeriesQuery);
+
   return (
     <>
       <div className="mb-12">
@@ -255,6 +260,42 @@ export function PostEditorMetadata({
               {m.editor_meta_comment_disabled_hint()}
             </span>
           </label>
+        </div>
+
+        <div className="space-y-3">
+          <label className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+            <BookOpen size={12} className="text-muted-foreground" />
+            {m.editor_meta_series()}
+          </label>
+          <select
+            value={post.seriesId ?? ""}
+            onChange={(e) => {
+              const val = e.target.value;
+              onPostChange({
+                seriesId: val ? Number(val) : null,
+              });
+            }}
+            className="w-full h-9 rounded-md border border-border bg-transparent px-3 text-sm"
+          >
+            <option value="">{m.editor_meta_series_none()}</option>
+            {seriesList?.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.title}
+              </option>
+            ))}
+          </select>
+          {post.seriesId && (
+            <Input
+              type="number"
+              min={0}
+              value={post.seriesOrder}
+              onChange={(e) =>
+                onPostChange({ seriesOrder: Number(e.target.value) || 0 })
+              }
+              placeholder={m.editor_meta_series_order()}
+              className="h-8 text-xs"
+            />
+          )}
         </div>
 
         <div className="col-span-1 space-y-3 md:col-span-3">

@@ -36,6 +36,7 @@ function PublicLayout() {
   const navOptions = [
     { label: m.nav_home(), to: "/" as const, id: "home" },
     { label: m.nav_posts(), to: "/posts" as const, id: "posts" },
+    { label: m.nav_archive(), to: "/archive" as const, id: "archive" },
     {
       label: m.nav_friend_links(),
       to: "/friend-links" as const,
