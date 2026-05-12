@@ -1,6 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
 import { getSystemConfigFn } from "../api/config.api";
-import { getSiteConfigFn, getSiteDomainFn } from "../api/site.api";
+import {
+  getAboutPageConfigFn,
+  getCommentsEnabledFn,
+  getSiteConfigFn,
+  getSiteDomainFn,
+} from "../api/site.api";
 
 export const CONFIG_KEYS = {
   all: ["config"] as const,
@@ -9,6 +14,8 @@ export const CONFIG_KEYS = {
   system: ["config", "system"] as const,
   site: ["config", "site"] as const,
   siteDomain: ["config", "siteDomain"] as const,
+  aboutPage: ["config", "aboutPage"] as const,
+  commentsEnabled: ["config", "commentsEnabled"] as const,
 };
 
 export const systemConfigQuery = queryOptions({
@@ -24,4 +31,14 @@ export const siteConfigQuery = queryOptions({
 export const siteDomainQuery = queryOptions({
   queryKey: CONFIG_KEYS.siteDomain,
   queryFn: () => getSiteDomainFn(),
+});
+
+export const aboutPageQuery = queryOptions({
+  queryKey: CONFIG_KEYS.aboutPage,
+  queryFn: () => getAboutPageConfigFn(),
+});
+
+export const commentsEnabledQuery = queryOptions({
+  queryKey: CONFIG_KEYS.commentsEnabled,
+  queryFn: () => getCommentsEnabledFn(),
 });

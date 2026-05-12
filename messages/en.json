@@ -1486,5 +1486,21 @@
   "guestbook_empty": "No messages yet, be the first to leave one",
   "guestbook_login_hint": "Login to leave a message",
   "guestbook_load_more": "Load More",
-  "admin_sidebar_guestbook": "Guestbook"
+  "admin_sidebar_guestbook": "Guestbook",
+  "admin_sidebar_about": "About Page",
+  "admin_about_title": "About Page",
+  "admin_about_desc": "Manage the content displayed on your About page.",
+  "admin_about_section_title_label": "Section Title",
+  "admin_about_section_title_ph": "e.g. About Me, Contact, Skills...",
+  "admin_about_section_content_label": "Content",
+  "admin_about_section_content_ph": "Write your content here (supports Markdown)...",
+  "admin_about_add_section": "Add Section",
+  "admin_about_remove_section": "Remove",
+  "admin_about_save": "Save",
+  "admin_about_saving": "Saving...",
+  "admin_about_save_success": "About page saved successfully",
+  "admin_about_save_error": "Failed to save about page",
+  "admin_about_empty_hint": "No sections yet. Click \"Add Section\" to start building your About page.",
+  "settings_comments_enabled": "Enable Comments",
+  "settings_comments_enabled_hint": "Allow visitors to comment on posts. When disabled, the comment section will be hidden on all posts."
 }

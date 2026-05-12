@@ -7,4 +7,8 @@ export interface AboutPageProps {
     icon?: string;
     label?: string;
   }>;
+  sections: Array<{
+    title: string;
+    content: string;
+  }>;
 }

@@ -14,7 +14,7 @@ import { PostSummary } from "./components/post-summary";
 import { RelatedPosts, RelatedPostsSkeleton } from "./components/related-posts";
 import TableOfContents from "./components/table-of-contents";
 
-export function PostPage({ post: initialPost }: PostPageProps) {
+export function PostPage({ post: initialPost, commentsEnabled = true }: PostPageProps) {
   const [post, setPost] = useState<Exclude<PostWithToc, null>>(initialPost);
   const { data: session } = authClient.useSession();
   // Approximate word count
@@ -132,12 +132,14 @@ export function PostPage({ post: initialPost }: PostPageProps) {
       </div>
 
       {/* Comments Section */}
-      <div
-        className="fuwari-card-base p-6 fuwari-onload-animation"
-        style={{ animationDelay: "450ms" }}
-      >
-        <FuwariCommentSection postId={post.id} />
-      </div>
+      {commentsEnabled && (
+        <div
+          className="fuwari-card-base p-6 fuwari-onload-animation"
+          style={{ animationDelay: "450ms" }}
+        >
+          <FuwariCommentSection postId={post.id} />
+        </div>
+      )}
     </div>
   );
 }

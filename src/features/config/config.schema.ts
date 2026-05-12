@@ -8,6 +8,11 @@ import {
 import { webhookEndpointSchema } from "@/features/webhook/webhook.schema";
 import type { Messages } from "@/lib/i18n";
 
+export const AboutSectionSchema = z.object({
+  title: z.string().max(100),
+  content: z.string().max(5000),
+});
+
 export const SystemConfigSchema = z.object({
   email: z
     .object({
@@ -41,6 +46,16 @@ export const SystemConfigSchema = z.object({
     })
     .optional(),
   site: SiteConfigInputSchema.optional(),
+  commentsEnabled: z.boolean().optional(),
+  pages: z
+    .object({
+      about: z
+        .object({
+          sections: z.array(AboutSectionSchema).optional(),
+        })
+        .optional(),
+    })
+    .optional(),
 });
 
 export const createSystemConfigFormSchema = (messages: Messages) =>
@@ -48,9 +63,12 @@ export const createSystemConfigFormSchema = (messages: Messages) =>
     email: SystemConfigSchema.shape.email,
     notification: SystemConfigSchema.shape.notification,
     site: createSiteConfigInputFormSchema(messages).optional(),
+    commentsEnabled: z.boolean().optional(),
+    pages: SystemConfigSchema.shape.pages,
   });
 
 export type SystemConfig = z.infer<typeof SystemConfigSchema>;
+export type AboutSection = z.infer<typeof AboutSectionSchema>;
 export type {
   SiteConfig,
   SiteConfigInput,
@@ -78,6 +96,12 @@ export const DEFAULT_CONFIG: SystemConfig = {
     webhooks: [],
   },
   site: blogConfig satisfies SiteConfigInput,
+  commentsEnabled: true,
+  pages: {
+    about: {
+      sections: [],
+    },
+  },
 };
 
 export const CONFIG_CACHE_KEYS = {

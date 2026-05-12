@@ -1,4 +1,5 @@
-import { useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { AssetUploadField } from "@/features/config/components/asset-upload-field";
@@ -162,6 +163,38 @@ export function SiteSettingsSection() {
       >
         <ThemeSettingsContent />
       </SectionShell>
+
+      <CommentsToggleSection />
     </div>
+  );
+}
+
+function CommentsToggleSection() {
+  const { field } = useController<SystemConfig, "commentsEnabled">({
+    name: "commentsEnabled",
+  });
+
+  return (
+    <section className="border border-border/30 bg-background/50 overflow-hidden">
+      <div className="p-8 space-y-2 border-b border-border/20">
+        <h3 className="text-lg font-medium text-foreground">
+          {m.settings_comments_enabled()}
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          {m.settings_comments_enabled_hint()}
+        </p>
+      </div>
+      <div className="p-8">
+        <label className="flex items-center gap-3 cursor-pointer">
+          <Checkbox
+            checked={field.value ?? true}
+            onCheckedChange={(checked) => field.onChange(checked)}
+          />
+          <span className="text-sm text-foreground">
+            {m.settings_comments_enabled()}
+          </span>
+        </label>
+      </div>
+    </section>
   );
 }

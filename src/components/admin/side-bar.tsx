@@ -4,6 +4,7 @@ import {
   BookOpen,
   FileText,
   Image as ImageIcon,
+  Info,
   LayoutDashboard,
   Link2,
   LogOut,
@@ -108,6 +109,12 @@ export function SideBar({
       path: "/admin/guestbook",
       icon: BookOpen,
       label: m.admin_sidebar_guestbook(),
+      exact: false,
+    },
+    {
+      path: "/admin/about",
+      icon: Info,
+      label: m.admin_sidebar_about(),
       exact: false,
     },
   ] satisfies Array<NavItem>;

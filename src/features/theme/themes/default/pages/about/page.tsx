@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { AboutPageProps } from "@/features/theme/contract/pages";
 import { m } from "@/paraglide/messages";
 
-export function AboutPage({ author, description, social }: AboutPageProps) {
+export function AboutPage({ author, description, social, sections }: AboutPageProps) {
   return (
     <div className="w-full max-w-3xl mx-auto pb-20 px-6 md:px-0">
       <header className="py-12 md:py-20 space-y-6">
@@ -14,16 +14,33 @@ export function AboutPage({ author, description, social }: AboutPageProps) {
         </p>
       </header>
 
-      <section className="prose prose-neutral dark:prose-invert max-w-none">
-        <div className="space-y-6 text-muted-foreground leading-relaxed">
-          <p className="text-lg">
-            {m.home_intro_prefix()}
-            <span className="font-semibold text-foreground">{author}</span>
-            {m.home_intro_separator()}
-            {description}
-          </p>
+      {sections.length > 0 ? (
+        <div className="space-y-12">
+          {sections.map((section, idx) => (
+            <section key={idx} className="border-b border-border/20 pb-10 last:border-b-0">
+              {section.title && (
+                <h2 className="text-lg font-medium text-foreground mb-4">
+                  {section.title}
+                </h2>
+              )}
+              <div className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                {section.content}
+              </div>
+            </section>
+          ))}
         </div>
-      </section>
+      ) : (
+        <section className="prose prose-neutral dark:prose-invert max-w-none">
+          <div className="space-y-6 text-muted-foreground leading-relaxed">
+            <p className="text-lg">
+              {m.home_intro_prefix()}
+              <span className="font-semibold text-foreground">{author}</span>
+              {m.home_intro_separator()}
+              {description}
+            </p>
+          </div>
+        </section>
+      )}
 
       {social && social.length > 0 && (
         <section className="mt-20 pt-10 border-t border-border/40">

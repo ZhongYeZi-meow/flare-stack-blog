@@ -60,6 +60,14 @@ export function resolveSystemConfig(
         config?.notification?.webhooks ?? DEFAULT_CONFIG.notification?.webhooks,
     },
     site: resolveSiteConfig(config),
+    commentsEnabled: config?.commentsEnabled ?? DEFAULT_CONFIG.commentsEnabled,
+    pages: {
+      about: {
+        sections:
+          config?.pages?.about?.sections ??
+          DEFAULT_CONFIG.pages?.about?.sections,
+      },
+    },
   };
 }
 

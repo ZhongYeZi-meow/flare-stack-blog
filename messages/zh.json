@@ -1478,5 +1478,21 @@
   "guestbook_empty": "暂无留言，成为第一个留言的人吧",
   "guestbook_login_hint": "登录后即可留言",
   "guestbook_load_more": "加载更多",
-  "admin_sidebar_guestbook": "留言管理"
+  "admin_sidebar_guestbook": "留言管理",
+  "admin_sidebar_about": "关于页",
+  "admin_about_title": "关于页管理",
+  "admin_about_desc": "管理关于页面上显示的内容。",
+  "admin_about_section_title_label": "区块标题",
+  "admin_about_section_title_ph": "如：关于我、联系方式、技能...",
+  "admin_about_section_content_label": "内容",
+  "admin_about_section_content_ph": "在这里编写内容（支持 Markdown）...",
+  "admin_about_add_section": "添加区块",
+  "admin_about_remove_section": "删除",
+  "admin_about_save": "保存",
+  "admin_about_saving": "保存中...",
+  "admin_about_save_success": "关于页保存成功",
+  "admin_about_save_error": "保存关于页失败",
+  "admin_about_empty_hint": "暂无区块，点击"添加区块"开始编辑关于页内容。",
+  "settings_comments_enabled": "启用评论",
+  "settings_comments_enabled_hint": "允许访客在文章下方发表评论。关闭后所有文章的评论区将被隐藏。"
 }

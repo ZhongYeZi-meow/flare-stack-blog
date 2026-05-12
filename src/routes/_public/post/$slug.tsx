@@ -3,7 +3,11 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import theme from "@theme";
 import { useEffect } from "react";
 import { z } from "zod";
-import { siteConfigQuery, siteDomainQuery } from "@/features/config/queries";
+import {
+  commentsEnabledQuery,
+  siteConfigQuery,
+  siteDomainQuery,
+} from "@/features/config/queries";
 import { recordPageViewFn } from "@/features/pageview/api/pageview.api";
 import { postBySlugQuery, relatedPostsQuery } from "@/features/posts/queries";
 import {
@@ -24,10 +28,11 @@ export const Route = createFileRoute("/_public/post/$slug")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     // 1. Critical: Main post data - use serverFn (executes directly on server, no HTTP)
-    const [post, domain, siteConfig] = await Promise.all([
+    const [post, domain, siteConfig, commentsEnabled] = await Promise.all([
       context.queryClient.ensureQueryData(postBySlugQuery(params.slug)),
       context.queryClient.ensureQueryData(siteDomainQuery),
       context.queryClient.ensureQueryData(siteConfigQuery),
+      context.queryClient.ensureQueryData(commentsEnabledQuery),
     ]);
 
     // 2. Deferred: Related posts (prefetch only, don't await)
@@ -40,6 +45,7 @@ export const Route = createFileRoute("/_public/post/$slug")({
     return {
       post,
       authorName: siteConfig.author,
+      commentsEnabled,
       canonicalHref: buildCanonicalUrl(
         domain,
         `/post/${encodeURIComponent(post.slug)}`,
@@ -86,6 +92,7 @@ export const Route = createFileRoute("/_public/post/$slug")({
 function RouteComponent() {
   const { slug } = Route.useParams();
   const { data: post } = useSuspenseQuery(postBySlugQuery(slug));
+  const { data: commentsEnabled } = useSuspenseQuery(commentsEnabledQuery);
 
   useEffect(() => {
     if (!post?.id) return;
@@ -101,5 +108,5 @@ function RouteComponent() {
 
   if (!post) throw notFound();
 
-  return <theme.PostPage post={post} />;
+  return <theme.PostPage post={post} commentsEnabled={commentsEnabled} />;
 }

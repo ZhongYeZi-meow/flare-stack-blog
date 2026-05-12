@@ -13,7 +13,7 @@ import { CommentSection } from "../../components/comments/view/comment-section";
 import { RelatedPosts, RelatedPostsSkeleton } from "./components/related-posts";
 import TableOfContents from "./components/table-of-contents";
 
-export function PostPage({ post }: PostPageProps) {
+export function PostPage({ post, commentsEnabled = true }: PostPageProps) {
   const navigate = useNavigate();
   const { data: session } = authClient.useSession();
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -169,9 +169,11 @@ export function PostPage({ post }: PostPageProps) {
         </div>
 
         {/* Comments Section */}
-        <div className="pt-12 border-t-0 border-border/40">
-          <CommentSection postId={post.id} />
-        </div>
+        {commentsEnabled && (
+          <div className="pt-12 border-t-0 border-border/40">
+            <CommentSection postId={post.id} />
+          </div>
+        )}
       </article>
 
       {/* Back To Top */}

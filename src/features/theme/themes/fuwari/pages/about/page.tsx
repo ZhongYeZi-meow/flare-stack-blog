@@ -7,7 +7,7 @@ const PLATFORM_ICONS: Record<string, React.ComponentType<{ className?: string }>
   qq: MessageCircle,
 };
 
-export function AboutPage({ author, description, social }: AboutPageProps) {
+export function AboutPage({ author, description, social, sections }: AboutPageProps) {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div
@@ -22,24 +22,43 @@ export function AboutPage({ author, description, social }: AboutPageProps) {
         </p>
       </div>
 
-      <div
-        className="fuwari-card-base p-6 md:p-8 fuwari-onload-animation"
-        style={{ animationDelay: "300ms" }}
-      >
-        <div className="prose prose-neutral dark:prose-invert max-w-none">
-          <p className="text-lg fuwari-text-75 leading-relaxed">
-            {m.home_intro_prefix()}
-            <span className="font-semibold fuwari-text-90">{author}</span>
-            {m.home_intro_separator()}
-            {description}
-          </p>
+      {sections.length > 0 ? (
+        sections.map((section, idx) => (
+          <div
+            key={idx}
+            className="fuwari-card-base p-6 md:p-8 fuwari-onload-animation"
+            style={{ animationDelay: `${300 + idx * 150}ms` }}
+          >
+            {section.title && (
+              <h2 className="text-xl font-bold fuwari-text-90 mb-4 transition-colors">
+                {section.title}
+              </h2>
+            )}
+            <div className="fuwari-text-75 leading-relaxed whitespace-pre-wrap">
+              {section.content}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div
+          className="fuwari-card-base p-6 md:p-8 fuwari-onload-animation"
+          style={{ animationDelay: "300ms" }}
+        >
+          <div className="prose prose-neutral dark:prose-invert max-w-none">
+            <p className="text-lg fuwari-text-75 leading-relaxed">
+              {m.home_intro_prefix()}
+              <span className="font-semibold fuwari-text-90">{author}</span>
+              {m.home_intro_separator()}
+              {description}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {social && social.length > 0 && (
         <div
           className="fuwari-card-base p-6 md:p-8 fuwari-onload-animation"
-          style={{ animationDelay: "450ms" }}
+          style={{ animationDelay: `${300 + Math.max(sections.length, 1) * 150}ms` }}
         >
           <h2 className="text-xl font-bold fuwari-text-90 mb-4 transition-colors">
             Social

@@ -37,6 +37,7 @@ import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
 import { Route as AdminGuestbookIndexRouteImport } from './routes/admin/guestbook/index'
 import { Route as AdminFriendLinksIndexRouteImport } from './routes/admin/friend-links/index'
 import { Route as AdminCommentsIndexRouteImport } from './routes/admin/comments/index'
+import { Route as AdminAboutIndexRouteImport } from './routes/admin/about/index'
 import { Route as PublicPostSlugRouteImport } from './routes/_public/post/$slug'
 import { Route as AdminPostsEditIdRouteImport } from './routes/admin/posts/edit.$id'
 
@@ -177,6 +178,11 @@ const AdminCommentsIndexRoute = AdminCommentsIndexRouteImport.update({
   path: '/comments/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAboutIndexRoute = AdminAboutIndexRouteImport.update({
+  id: '/about/',
+  path: '/about/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const PublicPostSlugRoute = PublicPostSlugRouteImport.update({
   id: '/post/$slug',
   path: '/post/$slug',
@@ -208,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/oauth/consent': typeof OauthConsentRoute
   '/admin/': typeof AdminIndexRoute
   '/post/$slug': typeof PublicPostSlugRoute
+  '/admin/about/': typeof AdminAboutIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
   '/admin/guestbook/': typeof AdminGuestbookIndexRoute
@@ -235,6 +242,7 @@ export interface FileRoutesByTo {
   '/oauth/consent': typeof OauthConsentRoute
   '/admin': typeof AdminIndexRoute
   '/post/$slug': typeof PublicPostSlugRoute
+  '/admin/about': typeof AdminAboutIndexRoute
   '/admin/comments': typeof AdminCommentsIndexRoute
   '/admin/friend-links': typeof AdminFriendLinksIndexRoute
   '/admin/guestbook': typeof AdminGuestbookIndexRoute
@@ -268,6 +276,7 @@ export interface FileRoutesById {
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/_public/post/$slug': typeof PublicPostSlugRoute
+  '/admin/about/': typeof AdminAboutIndexRoute
   '/admin/comments/': typeof AdminCommentsIndexRoute
   '/admin/friend-links/': typeof AdminFriendLinksIndexRoute
   '/admin/guestbook/': typeof AdminGuestbookIndexRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/admin/'
     | '/post/$slug'
+    | '/admin/about/'
     | '/admin/comments/'
     | '/admin/friend-links/'
     | '/admin/guestbook/'
@@ -326,6 +336,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/admin'
     | '/post/$slug'
+    | '/admin/about'
     | '/admin/comments'
     | '/admin/friend-links'
     | '/admin/guestbook'
@@ -358,6 +369,7 @@ export interface FileRouteTypes {
     | '/_public/'
     | '/admin/'
     | '/_public/post/$slug'
+    | '/admin/about/'
     | '/admin/comments/'
     | '/admin/friend-links/'
     | '/admin/guestbook/'
@@ -574,6 +586,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCommentsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/about/': {
+      id: '/admin/about/'
+      path: '/about'
+      fullPath: '/admin/about/'
+      preLoaderRoute: typeof AdminAboutIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_public/post/$slug': {
       id: '/_public/post/$slug'
       path: '/post/$slug'
@@ -668,6 +687,7 @@ const AdminPostsRouteRouteWithChildren = AdminPostsRouteRoute._addFileChildren(
 interface AdminRouteRouteChildren {
   AdminPostsRouteRoute: typeof AdminPostsRouteRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminAboutIndexRoute: typeof AdminAboutIndexRoute
   AdminCommentsIndexRoute: typeof AdminCommentsIndexRoute
   AdminFriendLinksIndexRoute: typeof AdminFriendLinksIndexRoute
   AdminGuestbookIndexRoute: typeof AdminGuestbookIndexRoute
@@ -679,6 +699,7 @@ interface AdminRouteRouteChildren {
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminPostsRouteRoute: AdminPostsRouteRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
+  AdminAboutIndexRoute: AdminAboutIndexRoute,
   AdminCommentsIndexRoute: AdminCommentsIndexRoute,
   AdminFriendLinksIndexRoute: AdminFriendLinksIndexRoute,
   AdminGuestbookIndexRoute: AdminGuestbookIndexRoute,
