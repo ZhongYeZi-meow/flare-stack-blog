@@ -10,7 +10,9 @@ import { LoginPage } from "./pages/auth/login";
 import { RegisterPage } from "./pages/auth/register";
 import { ResetPasswordPage } from "./pages/auth/reset-password";
 import { VerifyEmailPage } from "./pages/auth/verify-email";
+import { AboutPage } from "./pages/about/page";
 import { FriendLinksPage, FriendLinksPageSkeleton } from "./pages/friend-links";
+import { GuestbookPage } from "./pages/guestbook/page";
 import { HomePage, HomePageSkeleton } from "./pages/home";
 import { PostPage, PostPageSkeleton } from "./pages/post";
 import { PostsPage, PostsPageSkeleton } from "./pages/posts";
@@ -45,5 +47,7 @@ export default {
   ResetPasswordPage,
   VerifyEmailPage,
   ProfilePage,
+  AboutPage,
+  GuestbookPage,
   Toaster,
 } satisfies ThemeComponents;

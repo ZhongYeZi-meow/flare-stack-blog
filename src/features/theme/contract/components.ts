@@ -6,8 +6,10 @@ import type {
   UserLayoutProps,
 } from "./layouts";
 import type {
+  AboutPageProps,
   ForgotPasswordPageProps,
   FriendLinksPageProps,
+  GuestbookPageProps,
   HomePageProps,
   LoginPageProps,
   PostPageProps,
@@ -84,6 +86,12 @@ export interface ThemeComponents {
 
   /** 个人资料页组件 */
   ProfilePage: React.ComponentType<ProfilePageProps>;
+
+  /** 关于页组件 */
+  AboutPage: React.ComponentType<AboutPageProps>;
+
+  /** 留言板页组件 */
+  GuestbookPage: React.ComponentType<GuestbookPageProps>;
 
   /** Toast 通知组件（Sonner 封装） */
   Toaster: React.ComponentType;
