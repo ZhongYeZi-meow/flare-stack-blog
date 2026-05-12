@@ -1,4 +1,5 @@
-import { MessageCircle, Send, User as UserIcon } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { LogIn, MessageCircle, Send, User as UserIcon } from "lucide-react";
 import { useState } from "react";
 import type { GuestbookPageProps } from "@/features/theme/contract/pages";
 import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
@@ -61,8 +62,14 @@ export function GuestbookPage({
             </button>
           </form>
         ) : (
-          <div className="flex items-center justify-center py-4 fuwari-text-50 text-sm">
-            {m.guestbook_login_hint()}
+          <div className="flex items-center justify-center py-6">
+            <Link
+              to="/login"
+              className="fuwari-btn-primary px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 active:scale-95 transition-all"
+            >
+              <LogIn className="w-4 h-4" />
+              {m.guestbook_login_hint()}
+            </Link>
           </div>
         )}
       </div>
