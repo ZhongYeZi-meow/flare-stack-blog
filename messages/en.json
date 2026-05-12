@@ -640,6 +640,8 @@
   "editor_meta_unpinned": "Not Pinned",
   "editor_meta_access_password": "Access Password",
   "editor_meta_access_password_placeholder": "Leave blank for public access",
+  "editor_meta_comment_disabled": "Comments",
+  "editor_meta_comment_disabled_hint": "Disable comments for this post",
   "post_password_protected_title": "Password Protected",
   "post_password_protected_desc": "This post is password protected. Please enter the password to view the content.",
   "post_password_input_placeholder": "Enter password",

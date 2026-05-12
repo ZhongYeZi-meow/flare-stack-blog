@@ -1,10 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { SmilePlus } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { ReactionTargetType } from "@/lib/db/schema";
 import { toggleReactionFn } from "../api/reactions.api";
 import { REACTIONS_KEYS, reactionsQuery } from "../queries";
 import { AVAILABLE_EMOJIS } from "../reactions.schema";
+
+const EMOJI_LABELS: Record<string, string> = {
+  "👍": "Thumbs up",
+  "👎": "Thumbs down",
+  "😄": "Laugh",
+  "🎉": "Hooray",
+  "❤️": "Heart",
+  "🚀": "Rocket",
+  "👀": "Eyes",
+  "🤔": "Confused",
+};
 
 interface ReactionPickerProps {
   targetType: ReactionTargetType;
@@ -18,6 +30,8 @@ export function ReactionPicker({
   className,
 }: ReactionPickerProps) {
   const [showPicker, setShowPicker] = useState(false);
+  const pickerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const queryClient = useQueryClient();
 
   const { data: result } = useQuery(reactionsQuery(targetType, targetId));
@@ -33,6 +47,31 @@ export function ReactionPicker({
     },
   });
 
+  useEffect(() => {
+    if (!showPicker) return;
+    const handleClick = (e: MouseEvent) => {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(e.target as Node) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(e.target as Node)
+      ) {
+        setShowPicker(false);
+      }
+    };
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowPicker(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [showPicker]);
+
+  const hasAnyReactions = reactions.length > 0;
+
   return (
     <div className={cn("flex items-center flex-wrap gap-1.5", className)}>
       {reactions.map((r) => (
@@ -41,50 +80,74 @@ export function ReactionPicker({
           type="button"
           onClick={() => toggleMutation.mutate(r.emoji)}
           disabled={toggleMutation.isPending}
+          title={`${EMOJI_LABELS[r.emoji] ?? r.emoji} — ${r.count}`}
           className={cn(
-            "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs border transition-colors",
+            "group inline-flex items-center gap-1.5 h-8 px-3 rounded-full text-sm border transition-all duration-200",
+            "hover:scale-105 active:scale-95",
             r.hasReacted
-              ? "border-primary/50 bg-primary/10 text-primary"
-              : "border-border/40 bg-muted/30 text-muted-foreground hover:border-border hover:bg-muted/50",
+              ? "border-blue-400/60 bg-blue-500/10 text-blue-600 dark:text-blue-400 dark:border-blue-500/40 dark:bg-blue-500/15 shadow-sm shadow-blue-500/10"
+              : "border-border/50 bg-muted/20 text-muted-foreground hover:border-border hover:bg-muted/40",
           )}
         >
-          <span>{r.emoji}</span>
-          <span className="tabular-nums">{r.count}</span>
+          <span className="text-base leading-none">{r.emoji}</span>
+          <span className="tabular-nums font-medium text-xs">{r.count}</span>
         </button>
       ))}
 
-      <div className="relative">
+      <div className="relative" ref={pickerRef}>
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => setShowPicker(!showPicker)}
-          className="inline-flex items-center justify-center w-7 h-7 rounded-full border border-dashed border-border/40 text-muted-foreground hover:border-border hover:bg-muted/50 transition-colors text-sm"
-          aria-label="Add reaction"
+          title="Add reaction"
+          className={cn(
+            "inline-flex items-center justify-center rounded-full border transition-all duration-200",
+            "hover:scale-105 active:scale-95",
+            hasAnyReactions
+              ? "w-8 h-8 border-dashed border-border/40 text-muted-foreground/60 hover:border-border hover:bg-muted/40 hover:text-muted-foreground"
+              : "h-8 px-3 gap-1.5 border-border/40 text-muted-foreground/60 hover:border-border hover:bg-muted/40 hover:text-muted-foreground",
+            showPicker && "border-border bg-muted/50 text-muted-foreground",
+          )}
         >
-          +
+          <SmilePlus size={16} strokeWidth={1.5} />
         </button>
 
         {showPicker && (
-          <>
-            <div
-              className="fixed inset-0 z-40"
-              onClick={() => setShowPicker(false)}
-            />
-            <div className="absolute bottom-full left-0 mb-2 z-50 bg-popover border border-border rounded-lg shadow-lg p-2 grid grid-cols-4 gap-1 min-w-[160px]">
-              {AVAILABLE_EMOJIS.map((emoji) => (
-                <button
-                  key={emoji}
-                  type="button"
-                  onClick={() => {
-                    toggleMutation.mutate(emoji);
-                    setShowPicker(false);
-                  }}
-                  className="w-8 h-8 flex items-center justify-center rounded hover:bg-muted/50 transition-colors text-lg"
-                >
-                  {emoji}
-                </button>
-              ))}
+          <div
+            className={cn(
+              "absolute z-50 mt-2",
+              "bg-popover/95 backdrop-blur-sm border border-border/60 rounded-xl shadow-xl shadow-black/10",
+              "p-1.5",
+              "animate-in fade-in zoom-in-95 slide-in-from-bottom-2 duration-150",
+              "bottom-full left-0 mb-1",
+            )}
+          >
+            <div className="flex items-center gap-0.5">
+              {AVAILABLE_EMOJIS.map((emoji) => {
+                const existing = reactions.find((r) => r.emoji === emoji);
+                return (
+                  <button
+                    key={emoji}
+                    type="button"
+                    onClick={() => {
+                      toggleMutation.mutate(emoji);
+                      setShowPicker(false);
+                    }}
+                    title={EMOJI_LABELS[emoji] ?? emoji}
+                    className={cn(
+                      "w-9 h-9 flex items-center justify-center rounded-lg text-xl transition-all duration-150",
+                      "hover:bg-blue-500/15 hover:scale-125",
+                      "active:scale-100",
+                      existing?.hasReacted &&
+                        "bg-blue-500/10 ring-1 ring-blue-400/30",
+                    )}
+                  >
+                    {emoji}
+                  </button>
+                );
+              })}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

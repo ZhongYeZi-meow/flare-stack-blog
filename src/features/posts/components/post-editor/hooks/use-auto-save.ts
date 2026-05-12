@@ -41,6 +41,7 @@ export function useAutoSave({
     publishedAt: number | null;
     pinnedAt: number | null;
     accessPassword: string | null;
+    commentDisabled: boolean;
     tagIds: string; // Serialize for easy comparison
     contentRef: PostEditorData["contentJson"];
   } | null>(null);
@@ -57,6 +58,7 @@ export function useAutoSave({
     publishedAt: p.publishedAt ? p.publishedAt.valueOf() : null,
     pinnedAt: p.pinnedAt ? p.pinnedAt.valueOf() : null,
     accessPassword: p.accessPassword,
+    commentDisabled: p.commentDisabled,
     tagIds: [...p.tagIds].sort().join(","),
     contentRef: p.contentJson,
   });
@@ -73,6 +75,7 @@ export function useAutoSave({
       prev.publishedAt !== curr.publishedAt ||
       prev.pinnedAt !== curr.pinnedAt ||
       prev.accessPassword !== curr.accessPassword ||
+      prev.commentDisabled !== curr.commentDisabled ||
       prev.tagIds !== curr.tagIds ||
       prev.contentRef !== curr.contentRef
     );

@@ -11,6 +11,7 @@ export interface PostEditorData {
   publishedAt: Date | null;
   pinnedAt: Date | null;
   accessPassword: string | null;
+  commentDisabled: boolean;
   tagIds: Array<number>;
   isSynced: boolean;
   hasPublicCache: boolean;
@@ -33,6 +34,7 @@ export const defaultPostData: PostEditorData = {
   publishedAt: null,
   pinnedAt: null,
   accessPassword: null,
+  commentDisabled: false,
   tagIds: [],
   isSynced: true,
   hasPublicCache: false,

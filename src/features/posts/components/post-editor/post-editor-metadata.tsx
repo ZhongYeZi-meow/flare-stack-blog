@@ -1,5 +1,13 @@
-import { KeyRound, Loader2, Pin, PinOff, Sparkles } from "lucide-react";
+import {
+  KeyRound,
+  Loader2,
+  MessageSquareOff,
+  Pin,
+  PinOff,
+  Sparkles,
+} from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
+import { Checkbox } from "@/components/ui/checkbox";
 import DatePicker from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { TagSelector } from "@/features/tags/components/tag-selector";
@@ -229,6 +237,24 @@ export function PostEditorMetadata({
               className="h-auto flex-1 border-none bg-transparent p-0 px-0 text-xs font-mono text-foreground shadow-none placeholder:text-muted-foreground/30 focus-visible:ring-0"
             />
           </div>
+        </div>
+
+        <div className="space-y-3">
+          <label className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+            <MessageSquareOff size={12} className="text-muted-foreground" />
+            {m.editor_meta_comment_disabled()}
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <Checkbox
+              checked={post.commentDisabled}
+              onCheckedChange={(checked) =>
+                onPostChange({ commentDisabled: checked })
+              }
+            />
+            <span className="text-xs text-muted-foreground">
+              {m.editor_meta_comment_disabled_hint()}
+            </span>
+          </label>
         </div>
 
         <div className="col-span-1 space-y-3 md:col-span-3">

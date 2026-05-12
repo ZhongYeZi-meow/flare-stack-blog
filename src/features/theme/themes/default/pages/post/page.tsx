@@ -169,7 +169,7 @@ export function PostPage({ post, commentsEnabled = true }: PostPageProps) {
         </div>
 
         {/* Comments Section */}
-        {commentsEnabled && (
+        {commentsEnabled && !post.commentDisabled && (
           <div className="pt-12 border-t-0 border-border/40">
             <CommentSection postId={post.id} />
           </div>

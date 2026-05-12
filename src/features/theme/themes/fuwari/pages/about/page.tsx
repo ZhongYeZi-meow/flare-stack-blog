@@ -1,11 +1,10 @@
-import { Github, Globe, MessageCircle } from "lucide-react";
 import type { AboutPageProps } from "@/features/theme/contract/pages";
+import {
+  resolveSocialHref,
+  SOCIAL_PLATFORMS,
+} from "@/features/config/utils/social-platforms";
+import type { SocialPlatform } from "@/features/config/utils/social-platforms";
 import { m } from "@/paraglide/messages";
-
-const PLATFORM_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  github: Github,
-  qq: MessageCircle,
-};
 
 export function AboutPage({ author, description, social, sections }: AboutPageProps) {
   return (
@@ -63,23 +62,38 @@ export function AboutPage({ author, description, social, sections }: AboutPagePr
           <h2 className="text-xl font-bold fuwari-text-90 mb-4 transition-colors">
             Social
           </h2>
-          <div className="flex flex-wrap gap-3">
-            {social.map((item, idx) => {
-              const Icon =
-                PLATFORM_ICONS[item.platform?.toLowerCase()] ?? Globe;
-              return (
-                <a
-                  key={idx}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-(--fuwari-btn-regular-bg) text-(--fuwari-btn-content) hover:bg-(--fuwari-btn-regular-bg-hover) active:bg-(--fuwari-btn-regular-bg-active) active:scale-95 transition-all"
-                >
-                  <Icon className="w-4 h-4" />
-                  {item.label ?? item.platform}
-                </a>
-              );
-            })}
+          <div className="flex flex-wrap gap-2">
+            {social
+              .filter((item) => item.url)
+              .map((item, idx) => {
+                const platform = item.platform as SocialPlatform;
+                const preset =
+                  platform !== "custom"
+                    ? SOCIAL_PLATFORMS[platform]
+                    : null;
+                const Icon = preset?.icon;
+                const label = preset?.label ?? item.label ?? item.platform;
+                const href = resolveSocialHref(platform, item.url);
+
+                return (
+                  <a
+                    key={`${item.platform}-${idx}`}
+                    href={href}
+                    target={platform === "email" || platform === "qq" ? undefined : "_blank"}
+                    rel={platform === "email" || platform === "qq" ? undefined : "me noreferrer"}
+                    aria-label={label}
+                    className="fuwari-btn-regular rounded-lg h-10 w-10 active:scale-90 hover:text-(--fuwari-primary) transition-colors"
+                  >
+                    {Icon ? (
+                      <Icon size={20} strokeWidth={1.5} />
+                    ) : item.icon ? (
+                      <img src={item.icon} alt={label} className="w-5 h-5" />
+                    ) : (
+                      <span className="text-xs font-medium">{label.slice(0, 2)}</span>
+                    )}
+                  </a>
+                );
+              })}
           </div>
         </div>
       )}

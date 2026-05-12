@@ -28,6 +28,9 @@ export const PostsTable = sqliteTable(
     publishedAt: integer("published_at", { mode: "timestamp" }),
     pinnedAt: integer("pinned_at", { mode: "timestamp" }),
     accessPassword: text("access_password"),
+    commentDisabled: integer("comment_disabled", { mode: "boolean" })
+      .default(false)
+      .notNull(),
     createdAt,
     updatedAt,
   },

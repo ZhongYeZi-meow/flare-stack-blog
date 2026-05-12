@@ -74,6 +74,7 @@ function EditPost() {
     tagIds: tags.map((t) => t.id),
     pinnedAt: post.pinnedAt,
     accessPassword: post.accessPassword ?? null,
+    commentDisabled: post.commentDisabled ?? false,
     isSynced: post.isSynced,
     hasPublicCache: post.hasPublicCache,
   };

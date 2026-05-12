@@ -132,7 +132,7 @@ export function PostPage({ post: initialPost, commentsEnabled = true }: PostPage
       </div>
 
       {/* Comments Section */}
-      {commentsEnabled && (
+      {commentsEnabled && !post.commentDisabled && (
         <div
           className="fuwari-card-base p-6 fuwari-onload-animation"
           style={{ animationDelay: "450ms" }}

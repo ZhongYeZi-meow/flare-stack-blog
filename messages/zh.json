@@ -633,6 +633,8 @@
   "editor_meta_unpinned": "未置顶",
   "editor_meta_access_password": "访问密码",
   "editor_meta_access_password_placeholder": "留空则公开访问",
+  "editor_meta_comment_disabled": "评论",
+  "editor_meta_comment_disabled_hint": "禁止此文章的评论",
   "post_password_protected_title": "密码保护",
   "post_password_protected_desc": "此文章已设置密码保护，请输入密码查看内容。",
   "post_password_input_placeholder": "请输入密码",
@@ -1492,7 +1494,7 @@
   "admin_about_saving": "保存中...",
   "admin_about_save_success": "关于页保存成功",
   "admin_about_save_error": "保存关于页失败",
-  "admin_about_empty_hint": "暂无区块，点击"添加区块"开始编辑关于页内容。",
+  "admin_about_empty_hint": "暂无区块，点击「添加区块」开始编辑关于页内容。",
   "settings_comments_enabled": "启用评论",
   "settings_comments_enabled_hint": "允许访客在文章下方发表评论。关闭后所有文章的评论区将被隐藏。"
 }

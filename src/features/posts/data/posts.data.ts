@@ -68,6 +68,8 @@ export async function getPosts(
       status: PostsTable.status,
       publishedAt: PostsTable.publishedAt,
       pinnedAt: PostsTable.pinnedAt,
+      accessPassword: PostsTable.accessPassword,
+      commentDisabled: PostsTable.commentDisabled,
       createdAt: PostsTable.createdAt,
       updatedAt: PostsTable.updatedAt,
     })
@@ -171,6 +173,7 @@ export async function getPostsCursor(
       publishedAt: PostsTable.publishedAt,
       pinnedAt: PostsTable.pinnedAt,
       accessPassword: PostsTable.accessPassword,
+      commentDisabled: PostsTable.commentDisabled,
       createdAt: PostsTable.createdAt,
       updatedAt: PostsTable.updatedAt,
     })
@@ -308,6 +311,7 @@ export async function findPinnedPosts(db: DB) {
       publishedAt: true,
       pinnedAt: true,
       accessPassword: true,
+      commentDisabled: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -343,6 +347,7 @@ export async function findPostsBySlugs(db: DB, slugs: string[]) {
       publishedAt: true,
       pinnedAt: true,
       accessPassword: true,
+      commentDisabled: true,
       createdAt: true,
       updatedAt: true,
     },
