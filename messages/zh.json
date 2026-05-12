@@ -5,6 +5,8 @@
   "nav_friend_links": "友链",
   "nav_search": "搜索",
   "nav_login": "登录",
+  "nav_about": "关于",
+  "nav_guestbook": "留言板",
   "error_title": "程序发生错误",
   "error_desc": "执行过程中遇到了意外情况，您可以尝试刷新或重试。",
   "error_retry": "重试",
@@ -1467,5 +1469,14 @@
   "email_webhook_friend_link_submitted_message": "{submitterName} 提交了友链申请：{siteName}（{siteUrl}）",
   "email_webhook_friend_link_approved_message": "{siteName} 的友链申请已通过审核。",
   "email_webhook_friend_link_rejected_message": "{siteName} 的友链申请未通过：{rejectionReason}",
-  "email_webhook_friend_link_rejected_message_no_reason": "{siteName} 的友链申请未通过。"
+  "email_webhook_friend_link_rejected_message_no_reason": "{siteName} 的友链申请未通过。",
+  "guestbook_title": "留言板",
+  "guestbook_desc": "在这里留下你的足迹，说点什么吧。",
+  "guestbook_placeholder": "写下你的留言...",
+  "guestbook_submit": "发布留言",
+  "guestbook_submitting": "发送中...",
+  "guestbook_empty": "暂无留言，成为第一个留言的人吧",
+  "guestbook_login_hint": "登录后即可留言",
+  "guestbook_load_more": "加载更多",
+  "admin_sidebar_guestbook": "留言管理"
 }

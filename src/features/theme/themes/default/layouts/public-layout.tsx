@@ -21,7 +21,7 @@ export function PublicLayout({
       <BackgroundLayer background={siteConfig.theme.default.background} />
       <Navbar
         navOptions={navOptions}
-        onMenuClick={() => setIsMenuOpen(true)}
+        onMenuClick={() => setIsMenuOpen((prev) => !prev)}
         user={user}
         isLoading={isSessionLoading}
       />

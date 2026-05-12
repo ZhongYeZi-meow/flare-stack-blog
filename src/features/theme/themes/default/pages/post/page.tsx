@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUp, Pencil, Share2, Sparkles } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
 import type { PostPageProps } from "@/features/theme/contract/pages";
 import { ContentRenderer } from "@/features/theme/themes/default/components/content/content-renderer";
 import { authClient } from "@/lib/auth/auth.client";
@@ -160,6 +161,11 @@ export function PostPage({ post }: PostPageProps) {
           <Suspense fallback={<RelatedPostsSkeleton />}>
             <RelatedPosts slug={post.slug} />
           </Suspense>
+        </div>
+
+        {/* Reactions */}
+        <div className="pt-8">
+          <ReactionPicker targetType="post" targetId={post.id} />
         </div>
 
         {/* Comments Section */}

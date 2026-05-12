@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Clock, FileText, Pencil } from "lucide-react";
 import { Suspense, useState } from "react";
 import type { PostWithToc } from "@/features/posts/schema/posts.schema";
+import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
 import type { PostPageProps } from "@/features/theme/contract/pages";
 import { FuwariCommentSection } from "@/features/theme/themes/fuwari/components/comments/view/comment-section";
 import { ContentRenderer } from "@/features/theme/themes/fuwari/components/content/content-renderer";
@@ -121,6 +122,14 @@ export function PostPage({ post: initialPost }: PostPageProps) {
       <Suspense fallback={<RelatedPostsSkeleton />}>
         <RelatedPosts slug={post.slug} />
       </Suspense>
+
+      {/* Reactions */}
+      <div
+        className="fuwari-card-base p-6 fuwari-onload-animation"
+        style={{ animationDelay: "400ms" }}
+      >
+        <ReactionPicker targetType="post" targetId={post.id} />
+      </div>
 
       {/* Comments Section */}
       <div

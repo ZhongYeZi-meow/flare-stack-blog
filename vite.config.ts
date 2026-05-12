@@ -45,6 +45,7 @@ const config = defineConfig(({ mode }) => {
         viteEnvironment: {
           name: "ssr",
         },
+        persistState: true,
       }),
       viteTsConfigPaths({
         projects: ["./tsconfig.json"],

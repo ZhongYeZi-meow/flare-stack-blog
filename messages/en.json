@@ -5,6 +5,8 @@
   "nav_friend_links": "Links",
   "nav_search": "Search",
   "nav_login": "Login",
+  "nav_about": "About",
+  "nav_guestbook": "Guestbook",
   "error_title": "An Error Occurred",
   "error_desc": "An unexpected situation happened during execution, you can try to refresh or retry.",
   "error_retry": "Retry",
@@ -1475,5 +1477,14 @@
   "email_webhook_friend_link_submitted_message": "{submitterName} submitted a friend link request: {siteName} ({siteUrl})",
   "email_webhook_friend_link_approved_message": "{siteName} friend link request was approved.",
   "email_webhook_friend_link_rejected_message": "{siteName} friend link request was rejected: {rejectionReason}",
-  "email_webhook_friend_link_rejected_message_no_reason": "{siteName} friend link request was rejected."
+  "email_webhook_friend_link_rejected_message_no_reason": "{siteName} friend link request was rejected.",
+  "guestbook_title": "Guestbook",
+  "guestbook_desc": "Leave your mark here, say something.",
+  "guestbook_placeholder": "Write your message...",
+  "guestbook_submit": "Post Message",
+  "guestbook_submitting": "Sending...",
+  "guestbook_empty": "No messages yet, be the first to leave one",
+  "guestbook_login_hint": "Login to leave a message",
+  "guestbook_load_more": "Load More",
+  "admin_sidebar_guestbook": "Guestbook"
 }

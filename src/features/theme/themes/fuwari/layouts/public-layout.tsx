@@ -40,7 +40,7 @@ export function PublicLayout({
         <div className="pointer-events-auto max-w-(--fuwari-page-width) mx-auto px-0 md:px-4">
           <Navbar
             navOptions={navOptions}
-            onMenuClick={() => setIsMenuOpen(true)}
+            onMenuClick={() => setIsMenuOpen((prev) => !prev)}
             user={user}
             isLoading={isSessionLoading}
             bannerHeightVh={bannerHeightVh}

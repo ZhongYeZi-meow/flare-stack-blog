@@ -2,6 +2,7 @@ import { ClientOnly } from "@tanstack/react-router";
 import { memo, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import type { CommentWithUser } from "@/features/comments/comments.schema";
+import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
 import { authClient } from "@/lib/auth/auth.client";
 import { cn, formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
@@ -121,33 +122,36 @@ export const CommentItem = memo(
           {renderedContent}
 
           {comment.status !== "deleted" && (
-            <div className="flex items-center gap-4 pt-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  const rootId = comment.rootId ?? comment.id;
-                  onReply?.(
-                    rootId,
-                    comment.id,
-                    comment.user?.name || m.comments_item_unknown_user(),
-                  );
-                }}
-                className="h-auto p-0 text-[9px] uppercase tracking-widest font-bold text-muted-foreground hover:text-foreground bg-transparent hover:bg-transparent"
-              >
-                {m.comments_item_reply()}
-              </Button>
-
-              {(isAuthor || isAdmin) && (
+            <div className="space-y-2 pt-2">
+              <ReactionPicker targetType="comment" targetId={comment.id} />
+              <div className="flex items-center gap-4">
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => onDelete?.(comment.id)}
-                  className="h-auto p-0 text-[9px] uppercase tracking-widest font-bold text-muted-foreground/50 hover:text-destructive bg-transparent hover:bg-transparent"
+                  onClick={() => {
+                    const rootId = comment.rootId ?? comment.id;
+                    onReply?.(
+                      rootId,
+                      comment.id,
+                      comment.user?.name || m.comments_item_unknown_user(),
+                    );
+                  }}
+                  className="h-auto p-0 text-[9px] uppercase tracking-widest font-bold text-muted-foreground hover:text-foreground bg-transparent hover:bg-transparent"
                 >
-                  {m.comments_item_delete()}
+                  {m.comments_item_reply()}
                 </Button>
-              )}
+
+                {(isAuthor || isAdmin) && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onDelete?.(comment.id)}
+                    className="h-auto p-0 text-[9px] uppercase tracking-widest font-bold text-muted-foreground/50 hover:text-destructive bg-transparent hover:bg-transparent"
+                  >
+                    {m.comments_item_delete()}
+                  </Button>
+                )}
+              </div>
             </div>
           )}
         </div>

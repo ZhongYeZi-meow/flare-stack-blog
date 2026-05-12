@@ -1,6 +1,7 @@
 import { ClientOnly } from "@tanstack/react-router";
 import { memo, useMemo } from "react";
 import type { CommentWithUser } from "@/features/comments/comments.schema";
+import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
 import { authClient } from "@/lib/auth/auth.client";
 import { cn, formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
@@ -119,29 +120,32 @@ export const FuwariCommentItem = memo(
           {renderedContent}
 
           {comment.status !== "deleted" && (
-            <div className="flex items-center gap-4 pt-1">
-              <button
-                onClick={() => {
-                  const rootId = comment.rootId ?? comment.id;
-                  onReply?.(
-                    rootId,
-                    comment.id,
-                    comment.user?.name || m.comments_item_unknown_user(),
-                  );
-                }}
-                className="text-xs fuwari-text-30 hover:text-(--fuwari-primary) transition-colors font-medium"
-              >
-                {m.comments_item_reply()}
-              </button>
-
-              {(isAuthor || isAdmin) && (
+            <div className="space-y-2 pt-1">
+              <ReactionPicker targetType="comment" targetId={comment.id} />
+              <div className="flex items-center gap-4">
                 <button
-                  onClick={() => onDelete?.(comment.id)}
-                  className="text-xs fuwari-text-30 hover:text-red-500 transition-colors font-medium"
+                  onClick={() => {
+                    const rootId = comment.rootId ?? comment.id;
+                    onReply?.(
+                      rootId,
+                      comment.id,
+                      comment.user?.name || m.comments_item_unknown_user(),
+                    );
+                  }}
+                  className="text-xs fuwari-text-30 hover:text-(--fuwari-primary) transition-colors font-medium"
                 >
-                  {m.comments_item_delete()}
+                  {m.comments_item_reply()}
                 </button>
-              )}
+
+                {(isAuthor || isAdmin) && (
+                  <button
+                    onClick={() => onDelete?.(comment.id)}
+                    className="text-xs fuwari-text-30 hover:text-red-500 transition-colors font-medium"
+                  >
+                    {m.comments_item_delete()}
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>
