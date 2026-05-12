@@ -26,6 +26,7 @@ function AboutPage() {
     <theme.AboutPage
       author={siteConfig.author}
       description={siteConfig.description}
+      subtitle={aboutConfig.subtitle}
       social={siteConfig.social ?? []}
       sections={aboutConfig.sections}
     />

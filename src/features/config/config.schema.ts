@@ -52,6 +52,7 @@ export const SystemConfigSchema = z.object({
     .object({
       about: z
         .object({
+          subtitle: z.string().max(200).optional(),
           sections: z.array(AboutSectionSchema).optional(),
         })
         .optional(),

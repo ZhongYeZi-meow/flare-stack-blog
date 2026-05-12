@@ -6,7 +6,7 @@ import {
 import type { SocialPlatform } from "@/features/config/utils/social-platforms";
 import { m } from "@/paraglide/messages";
 
-export function AboutPage({ author, description, social, sections }: AboutPageProps) {
+export function AboutPage({ author, description, subtitle, social, sections }: AboutPageProps) {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div
@@ -16,6 +16,11 @@ export function AboutPage({ author, description, social, sections }: AboutPagePr
         <h1 className="text-3xl md:text-4xl font-bold fuwari-text-90 z-10 transition-colors">
           {m.nav_about()}
         </h1>
+        {subtitle && (
+          <p className="mt-2 text-sm fuwari-text-50 z-10 text-center max-w-md">
+            {subtitle}
+          </p>
+        )}
       </div>
 
       {sections.length > 0 ? (

@@ -16,6 +16,7 @@ export const getAboutPageConfigFn = createServerFn()
   .handler(async ({ context }) => {
     const config = await ConfigService.getSystemConfig(context);
     return {
+      subtitle: config.pages?.about?.subtitle ?? "",
       sections: config.pages?.about?.sections ?? [],
       commentsEnabled: config.commentsEnabled ?? true,
     };

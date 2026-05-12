@@ -23,11 +23,13 @@ export const Route = createFileRoute("/admin/about/")({
 function RouteComponent() {
   const { settings, saveSettings, isLoading } = useSystemSetting();
   const [sections, setSections] = useState<AboutSection[]>([]);
+  const [subtitle, setSubtitle] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (settings?.pages?.about?.sections) {
-      setSections(settings.pages.about.sections);
+    if (settings?.pages?.about) {
+      setSections(settings.pages.about.sections ?? []);
+      setSubtitle(settings.pages.about.subtitle ?? "");
     }
   }, [settings]);
 
@@ -58,7 +60,7 @@ function RouteComponent() {
           ...settings,
           pages: {
             ...settings.pages,
-            about: { sections },
+            about: { subtitle, sections },
           },
         },
       });
@@ -101,6 +103,24 @@ function RouteComponent() {
           )}
           {isSaving ? m.admin_about_saving() : m.admin_about_save()}
         </Button>
+      </div>
+
+      <div className="border border-border/30 bg-background/50 overflow-hidden">
+        <div className="p-6 space-y-2">
+          <label className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground block">
+            {m.admin_about_subtitle_label()}
+          </label>
+          <Input
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+            placeholder={m.admin_about_subtitle_ph()}
+            className="border-border/30"
+            maxLength={200}
+          />
+          <p className="text-xs text-muted-foreground">
+            {m.admin_about_subtitle_hint()}
+          </p>
+        </div>
       </div>
 
       <div className="space-y-6">

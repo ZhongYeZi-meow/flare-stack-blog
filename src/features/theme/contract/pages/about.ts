@@ -1,6 +1,7 @@
 export interface AboutPageProps {
   author: string;
   description: string;
+  subtitle?: string;
   social: Array<{
     platform: string;
     url: string;
