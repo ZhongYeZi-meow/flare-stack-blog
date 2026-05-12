@@ -310,3 +310,70 @@
 .dark ::-webkit-scrollbar-thumb:active {
   background-color: rgba(255, 255, 255, 0.6);
 }
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+
+  nav,
+  aside,
+  footer,
+  #fuwari-navbar-wrapper,
+  .fuwari-card-base::before,
+  [data-reading-progress],
+  [aria-label="Back to top"],
+  .fuwari-btn-regular,
+  button {
+    display: none !important;
+  }
+
+  .fuwari-card-base {
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript"]::after {
+    content: "";
+  }
+
+  pre,
+  code {
+    border: 1px solid #ddd !important;
+    background: #f8f8f8 !important;
+    color: black !important;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    color: black !important;
+  }
+
+  .prose {
+    max-width: none !important;
+  }
+}

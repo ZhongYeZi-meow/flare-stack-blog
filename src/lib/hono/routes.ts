@@ -136,6 +136,36 @@ app.post(
 // Admin export download route
 app.route("/api/admin/export", exportDownloadRoute);
 
+app.get("/og", (c) => {
+  const title = c.req.query("title") || "Blog Post";
+  const escaped = title
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="rgba(255,255,255,0.1)"/>
+  <text x="120" y="350" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="bold" fill="white" textLength="${Math.min(escaped.length * 28, 960)}" lengthAdjust="spacingAndGlyphs">
+    ${escaped.length > 40 ? escaped.slice(0, 40) + "..." : escaped}
+  </text>
+</svg>`;
+
+  return new Response(svg, {
+    headers: {
+      "Content-Type": "image/svg+xml",
+      "Cache-Control": "public, max-age=86400, s-maxage=86400",
+    },
+  });
+});
+
 // Router之前的防护
 app.all("*", shieldMiddleware);
 

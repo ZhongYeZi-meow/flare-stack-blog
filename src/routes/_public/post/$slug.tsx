@@ -69,6 +69,10 @@ export const Route = createFileRoute("/_public/post/$slug")({
         { property: "og:description", content: post?.summary ?? "" },
         { property: "og:type", content: "article" },
         { property: "og:url", content: canonicalHref },
+        { property: "og:image", content: `${canonicalHref.split("/post/")[0]}/og?title=${encodeURIComponent(post?.title ?? "")}` },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: post?.title ?? "" },
+        { name: "twitter:description", content: post?.summary ?? "" },
       ],
       links: [canonicalLink(canonicalHref)],
       scripts: post

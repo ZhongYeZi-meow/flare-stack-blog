@@ -179,8 +179,13 @@ export default function ZoomableImage({
   ...props
 }: ZoomableImageProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [thumbRect, setThumbRect] = useState<DOMRect | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current?.complete) setLoaded(true);
+  }, []);
 
   if (!src) return null;
 
@@ -194,7 +199,7 @@ export default function ZoomableImage({
   return (
     <>
       <div
-        className="w-full h-auto cursor-zoom-in group select-none overflow-hidden m-0 p-0 rounded-xl"
+        className="w-full h-auto cursor-zoom-in group select-none overflow-hidden m-0 p-0 rounded-xl bg-black/3 dark:bg-white/3"
         onClick={handleOpen}
       >
         <img
@@ -204,8 +209,10 @@ export default function ZoomableImage({
           width={width}
           height={height}
           loading="lazy"
+          onLoad={() => setLoaded(true)}
           className={cn(
             "w-full h-auto block transition-all duration-500 will-change-transform m-0 p-0",
+            loaded ? "opacity-100 scale-100" : "opacity-0 scale-[0.98]",
             className,
           )}
           {...props}

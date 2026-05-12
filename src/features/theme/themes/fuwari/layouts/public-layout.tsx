@@ -1,5 +1,5 @@
-import { useLocation, useRouteContext } from "@tanstack/react-router";
-import { useState } from "react";
+import { useLocation, useNavigate, useRouteContext } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import type { PublicLayoutProps } from "@/features/theme/contract/layouts";
 import { BackToTop } from "../components/control/back-to-top";
 import { Sidebar } from "../components/sidebar";
@@ -22,8 +22,24 @@ export function PublicLayout({
   const { siteConfig } = useRouteContext({ from: "__root__" });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
   const bannerHeightVh = isHomePage ? BANNER_HEIGHT_HOME : BANNER_HEIGHT_PAGE;
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      const isInput = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable;
+      if (isInput) return;
+
+      if (e.key === "/" && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        navigate({ to: "/search" });
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [navigate]);
 
   return (
     <div className="relative min-h-screen bg-(--fuwari-page-bg) transition-colors">
