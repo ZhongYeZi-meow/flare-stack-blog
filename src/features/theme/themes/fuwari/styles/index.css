@@ -311,6 +311,31 @@
   background-color: rgba(255, 255, 255, 0.6);
 }
 
+.fuwari-custom-md h1[id],
+.fuwari-custom-md h2[id],
+.fuwari-custom-md h3[id],
+.fuwari-custom-md h4[id] {
+  scroll-margin-top: 5rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.fuwari-custom-md h1[id]:hover::after,
+.fuwari-custom-md h2[id]:hover::after,
+.fuwari-custom-md h3[id]:hover::after,
+.fuwari-custom-md h4[id]:hover::after {
+  content: "#";
+  position: absolute;
+  left: -1.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 400;
+  opacity: 0.4;
+  font-size: 0.8em;
+  color: var(--fuwari-primary);
+  transition: opacity 0.2s;
+}
+
 @media print {
   body {
     background: white !important;

@@ -1511,6 +1511,7 @@
   "editor_meta_series_none": "无系列",
   "editor_meta_series_order": "系列中的排序",
   "series_toc_title": "本系列文章",
+  "post_toc_title": "目录",
   "newsletter_title": "邮件订阅",
   "newsletter_desc": "订阅以获取新文章通知。",
   "newsletter_placeholder": "你的邮箱",

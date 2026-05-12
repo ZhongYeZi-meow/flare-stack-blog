@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Clock, Eye, FileText, Pencil } from "lucide-react";
-import { Suspense, useState } from "react";
+import { ChevronDown, Clock, Eye, FileText, List, Pencil } from "lucide-react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 import { useViewCounts } from "@/features/pageview/queries";
 import type { PostWithToc } from "@/features/posts/schema/posts.schema";
 import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
@@ -39,6 +40,9 @@ export function PostPage({ post: initialPost, commentsEnabled = true }: PostPage
       >
         <TableOfContents headers={post.toc} />
       </div>
+
+      {/* Mobile TOC (Collapsible) */}
+      {post.toc.length > 0 && <MobileToc headers={post.toc} />}
 
       {/* Main Post Container */}
       <div className="fuwari-card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full fuwari-onload-animation">
@@ -111,9 +115,7 @@ export function PostPage({ post: initialPost, commentsEnabled = true }: PostPage
         ) : (
           <>
             {/* Markdown Content */}
-            <div className="mb-6 prose dark:prose-invert prose-base max-w-none! fuwari-custom-md">
-              <ContentRenderer content={post.contentJson} />
-            </div>
+            <HeadingAnchorContent content={post.contentJson} />
 
             {/* End of Content Notice */}
             <div className="my-8 flex items-center justify-center w-full">
@@ -171,6 +173,74 @@ export function PostPage({ post: initialPost, commentsEnabled = true }: PostPage
           postId={post.id}
         />
       </div>
+    </div>
+  );
+}
+
+function HeadingAnchorContent({ content }: { content: typeof import("@tiptap/react").JSONContent | null }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const handleClick = (e: MouseEvent) => {
+      const heading = (e.target as HTMLElement).closest("h1[id], h2[id], h3[id], h4[id]");
+      if (heading) {
+        const id = heading.getAttribute("id");
+        if (id) {
+          const url = `${window.location.origin}${window.location.pathname}#${id}`;
+          navigator.clipboard.writeText(url);
+          window.history.replaceState(null, "", `#${id}`);
+        }
+      }
+    };
+    el.addEventListener("click", handleClick);
+    return () => el.removeEventListener("click", handleClick);
+  }, []);
+
+  return (
+    <div ref={ref} className="mb-6 prose dark:prose-invert prose-base max-w-none! fuwari-custom-md">
+      <ContentRenderer content={content} />
+    </div>
+  );
+}
+
+function MobileToc({ headers }: { headers: Array<{ id: string; text: string; level: number }> }) {
+  const [open, setOpen] = useState(false);
+  const minDepth = Math.min(...headers.map(h => h.level));
+
+  return (
+    <div className="2xl:hidden fuwari-card-base p-4 fuwari-onload-animation" style={{ animationDelay: "50ms" }}>
+      <button
+        onClick={() => setOpen(v => !v)}
+        className="flex items-center gap-2 w-full text-sm font-medium fuwari-text-75"
+      >
+        <List size={16} className="text-(--fuwari-primary)" />
+        <span>{m.post_toc_title()}</span>
+        <ChevronDown size={16} className={cn("ml-auto transition-transform", open && "rotate-180")} />
+      </button>
+      {open && (
+        <nav className="mt-3 pl-2 border-l-2 border-(--fuwari-primary)/20 space-y-1.5 max-h-64 overflow-y-auto">
+          {headers.filter(h => h.level < minDepth + 3).map(h => (
+            <a
+              key={h.id}
+              href={`#${h.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById(h.id);
+                if (el) {
+                  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
+                }
+                setOpen(false);
+              }}
+              className="block text-sm fuwari-text-50 hover:text-(--fuwari-primary) transition-colors"
+              style={{ paddingLeft: `${(h.level - minDepth) * 12}px` }}
+            >
+              {h.text}
+            </a>
+          ))}
+        </nav>
+      )}
     </div>
   );
 }

@@ -43,6 +43,12 @@ export function PublicLayout({
 
   return (
     <div className="relative min-h-screen bg-(--fuwari-page-bg) transition-colors">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-(--fuwari-primary) focus:text-white focus:text-sm focus:font-medium focus:shadow-lg"
+      >
+        Skip to content
+      </a>
       <MobileMenu
         navOptions={navOptions}
         isOpen={isMenuOpen}
@@ -92,7 +98,7 @@ export function PublicLayout({
           <Sidebar className="order-2 lg:order-1" />
 
           {/* Main Content Column */}
-          <main className="order-1 lg:order-2 flex flex-col gap-4 min-w-0">
+          <main id="main-content" className="order-1 lg:order-2 flex flex-col gap-4 min-w-0">
             {children}
           </main>
 

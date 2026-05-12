@@ -68,6 +68,7 @@ export function PostCard({
         <Link
           to="/post/$slug"
           params={{ slug: post.slug }}
+          preload="intent"
           className="transition group w-full block font-bold mb-3 text-3xl fuwari-text-90 hover:text-(--fuwari-primary) active:text-(--fuwari-primary) relative before:w-1 before:h-5 before:rounded-md before:absolute before:-left-5 before:top-1/2 before:-translate-y-1/2 before:hidden md:before:block before:bg-(--fuwari-primary)"
         >
           {post.title}
@@ -158,6 +159,7 @@ export function PostCard({
       <Link
         to="/post/$slug"
         params={{ slug: post.slug }}
+        preload="intent"
         aria-label={post.title}
         className="hidden md:flex fuwari-btn-regular w-13 absolute right-3 top-3 bottom-3 rounded-xl active:scale-95"
       >
