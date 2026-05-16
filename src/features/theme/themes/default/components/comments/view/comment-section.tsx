@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import ConfirmationModal from "@/components/ui/confirmation-modal";
 import { useComments } from "@/features/comments/hooks/use-comments";
 import { rootCommentsByPostIdInfiniteQuery } from "@/features/comments/queries";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { cn } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 import { CommentEditor } from "./comment-editor";

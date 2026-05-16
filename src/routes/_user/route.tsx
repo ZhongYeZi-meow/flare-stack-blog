@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { ErrorPage } from "@/components/common/error-page";
 import { AUTH_KEYS, sessionQuery } from "@/features/auth/queries";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { getLogoutAuthErrorMessage } from "@/lib/auth/auth-errors";
 import { CACHE_CONTROL } from "@/lib/constants";
 import { m } from "@/paraglide/messages";

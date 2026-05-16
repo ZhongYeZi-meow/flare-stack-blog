@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { AUTH_KEYS } from "@/features/auth/queries";
 import { usePreviousLocation } from "@/hooks/use-previous-location";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { getRegisterAuthErrorMessage } from "@/lib/auth/auth-errors";
 import type { Messages } from "@/lib/i18n";
 import { m } from "@/paraglide/messages";

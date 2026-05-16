@@ -9,7 +9,7 @@ import {
   useProfileForm,
 } from "@/features/auth/hooks";
 import { AUTH_KEYS } from "@/features/auth/queries";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { m } from "@/paraglide/messages";
 
 export const Route = createFileRoute("/_user/profile")({

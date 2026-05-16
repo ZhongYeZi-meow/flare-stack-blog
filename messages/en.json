@@ -1527,5 +1527,16 @@
   "newsletter_desc": "Subscribe to get notified of new posts.",
   "newsletter_placeholder": "your@email.com",
   "newsletter_subscribe": "Subscribe",
-  "newsletter_success": "Subscribed! You'll be notified of new posts."
+  "newsletter_success": "Subscribed! You'll be notified of new posts.",
+  "newsletter_code_sent": "Verification code sent to your email",
+  "newsletter_code_placeholder": "Enter 6-digit code",
+  "newsletter_verify": "Verify",
+  "newsletter_resend": "Resend",
+  "newsletter_resend_countdown": "Resend in {seconds}s",
+  "newsletter_code_invalid": "Invalid or expired code",
+  "newsletter_code_expired": "Code expired, please resend",
+  "newsletter_email_subject": "Newsletter Verification Code",
+  "newsletter_email_body": "Your newsletter subscription verification code is:",
+  "newsletter_email_expiry": "This code expires in 10 minutes.",
+  "newsletter_email_ignore": "If you didn't request this, please ignore this email."
 }

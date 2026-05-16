@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { usePreviousLocation } from "@/hooks/use-previous-location";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { getSocialLoginAuthErrorMessage } from "@/lib/auth/auth-errors";
 import { m } from "@/paraglide/messages";
 import { normalizeRedirectUrl } from "./normalize-redirect-url";

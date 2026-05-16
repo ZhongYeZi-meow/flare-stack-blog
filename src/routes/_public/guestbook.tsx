@@ -6,7 +6,7 @@ import theme from "@theme";
 import type { GuestbookEntryView } from "@/features/theme/contract/pages";
 import { createGuestbookEntryFn } from "@/features/guestbook/api/guestbook.public.api";
 import { GUESTBOOK_KEYS, guestbookQuery } from "@/features/guestbook/queries";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { m } from "@/paraglide/messages";
 
 export const Route = createFileRoute("/_public/guestbook")({

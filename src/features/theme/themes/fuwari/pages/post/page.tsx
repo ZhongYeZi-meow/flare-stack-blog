@@ -8,7 +8,7 @@ import { ReactionPicker } from "@/features/reactions/components/reaction-picker"
 import type { PostPageProps } from "@/features/theme/contract/pages";
 import { FuwariCommentSection } from "@/features/theme/themes/fuwari/components/comments/view/comment-section";
 import { ContentRenderer } from "@/features/theme/themes/fuwari/components/content/content-renderer";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { m } from "@/paraglide/messages";
 import { PostMeta } from "./components/post-meta";
 import { PostPasswordGate } from "./components/post-password-gate";

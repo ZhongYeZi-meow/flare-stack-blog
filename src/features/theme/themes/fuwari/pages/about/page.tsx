@@ -1,12 +1,18 @@
-import type { AboutPageProps } from "@/features/theme/contract/pages";
+import type { SocialPlatform } from "@/features/config/utils/social-platforms";
 import {
   resolveSocialHref,
   SOCIAL_PLATFORMS,
 } from "@/features/config/utils/social-platforms";
-import type { SocialPlatform } from "@/features/config/utils/social-platforms";
+import type { AboutPageProps } from "@/features/theme/contract/pages";
 import { m } from "@/paraglide/messages";
 
-export function AboutPage({ author, description, subtitle, social, sections }: AboutPageProps) {
+export function AboutPage({
+  author,
+  description,
+  subtitle,
+  social,
+  sections,
+}: AboutPageProps) {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div
@@ -59,7 +65,9 @@ export function AboutPage({ author, description, subtitle, social, sections }: A
       {social && social.length > 0 && (
         <div
           className="fuwari-card-base p-6 md:p-8 fuwari-onload-animation"
-          style={{ animationDelay: `${300 + Math.max(sections.length, 1) * 150}ms` }}
+          style={{
+            animationDelay: `${300 + Math.max(sections.length, 1) * 150}ms`,
+          }}
         >
           <h2 className="text-xl font-bold fuwari-text-90 mb-4 transition-colors">
             Social
@@ -70,9 +78,7 @@ export function AboutPage({ author, description, subtitle, social, sections }: A
               .map((item, idx) => {
                 const platform = item.platform as SocialPlatform;
                 const preset =
-                  platform !== "custom"
-                    ? SOCIAL_PLATFORMS[platform]
-                    : null;
+                  platform !== "custom" ? SOCIAL_PLATFORMS[platform] : null;
                 const Icon = preset?.icon;
                 const label = preset?.label ?? item.label ?? item.platform;
                 const href = resolveSocialHref(platform, item.url);
@@ -81,8 +87,16 @@ export function AboutPage({ author, description, subtitle, social, sections }: A
                   <a
                     key={`${item.platform}-${idx}`}
                     href={href}
-                    target={platform === "email" || platform === "qq" ? undefined : "_blank"}
-                    rel={platform === "email" || platform === "qq" ? undefined : "me noreferrer"}
+                    target={
+                      platform === "email" || platform === "qq"
+                        ? undefined
+                        : "_blank"
+                    }
+                    rel={
+                      platform === "email" || platform === "qq"
+                        ? undefined
+                        : "me noreferrer"
+                    }
                     aria-label={label}
                     className="fuwari-btn-regular rounded-lg h-10 w-10 active:scale-90 hover:text-(--fuwari-primary) transition-colors"
                   >
@@ -91,7 +105,9 @@ export function AboutPage({ author, description, subtitle, social, sections }: A
                     ) : item.icon ? (
                       <img src={item.icon} alt={label} className="w-5 h-5" />
                     ) : (
-                      <span className="text-xs font-medium">{label.slice(0, 2)}</span>
+                      <span className="text-xs font-medium">
+                        {label.slice(0, 2)}
+                      </span>
                     )}
                   </a>
                 );

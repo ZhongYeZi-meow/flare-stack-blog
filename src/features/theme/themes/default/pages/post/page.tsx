@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
 import type { PostPageProps } from "@/features/theme/contract/pages";
 import { ContentRenderer } from "@/features/theme/themes/default/components/content/content-renderer";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 import { CommentSection } from "../../components/comments/view/comment-section";

@@ -1519,5 +1519,16 @@
   "newsletter_desc": "订阅以获取新文章通知。",
   "newsletter_placeholder": "你的邮箱",
   "newsletter_subscribe": "订阅",
-  "newsletter_success": "订阅成功！有新文章时会通知你。"
+  "newsletter_success": "订阅成功！有新文章时会通知你。",
+  "newsletter_code_sent": "验证码已发送到你的邮箱",
+  "newsletter_code_placeholder": "输入 6 位验证码",
+  "newsletter_verify": "验证",
+  "newsletter_resend": "重新发送",
+  "newsletter_resend_countdown": "{seconds}s 后可重发",
+  "newsletter_code_invalid": "验证码错误或已过期",
+  "newsletter_code_expired": "验证码已过期，请重新发送",
+  "newsletter_email_subject": "邮件订阅验证码",
+  "newsletter_email_body": "你的邮件订阅验证码是：",
+  "newsletter_email_expiry": "验证码 10 分钟内有效。",
+  "newsletter_email_ignore": "如果你没有请求此操作，请忽略本邮件。"
 }

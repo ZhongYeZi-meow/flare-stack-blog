@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import { ThemeToggle } from "@/components/common/theme-toggle";
 import ConfirmationModal from "@/components/ui/confirmation-modal";
 import { AUTH_KEYS } from "@/features/auth/queries";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { cn } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 import type { FileRoutesByTo } from "@/routeTree.gen";

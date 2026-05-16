@@ -2,7 +2,7 @@ import { ClientOnly } from "@tanstack/react-router";
 import { memo, useMemo } from "react";
 import type { CommentWithUser } from "@/features/comments/comments.schema";
 import { ReactionPicker } from "@/features/reactions/components/reaction-picker";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { cn, formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 import { ExpandableContent } from "./expandable-content";

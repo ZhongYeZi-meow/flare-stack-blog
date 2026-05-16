@@ -8,7 +8,7 @@ import { Turnstile, useTurnstile } from "@/components/common/turnstile";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useComments } from "@/features/comments/hooks/use-comments";
 import { rootCommentsByPostIdInfiniteQuery } from "@/features/comments/queries";
-import { authClient } from "@/lib/auth/auth.client";
+import { authClient } from "@/lib/auth/auth-client";
 import { m } from "@/paraglide/messages";
 import { FuwariCommentEditor } from "../editor/comment-editor";
 import { FuwariCommentList } from "./comment-list";
