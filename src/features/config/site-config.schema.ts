@@ -7,6 +7,7 @@ export const SocialLinkSchema = z.object({
   url: z.string(),
   icon: z.string().optional(),
   label: z.string().optional(),
+  hidden: z.boolean().optional(),
 });
 
 export const DEFAULT_THEME_OPACITY_MIN = 0;

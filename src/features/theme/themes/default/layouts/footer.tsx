@@ -43,7 +43,7 @@ export function Footer({ navOptions }: FooterProps) {
             </Link>
           ))}
           {siteConfig.social
-            .filter((link) => link.url)
+            .filter((link) => link.url && !link.hidden)
             .map((link, i) => {
               const href = resolveSocialHref(link.platform, link.url);
               const label =

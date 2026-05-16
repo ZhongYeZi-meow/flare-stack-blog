@@ -5,7 +5,12 @@ export const blogConfig = {
   author: "作者",
   description:
     "这是我的个人网站和博客。在这里，我主要分享与技术和生活相关的内容。欢迎阅读！",
-  social: [],
+  social: [
+    { platform: "github", url: "" },
+    { platform: "twitter", url: "" },
+    { platform: "email", url: "" },
+    { platform: "rss", url: "/rss.xml" },
+  ],
   icons: {
     faviconSvg: "/favicon.svg",
     faviconIco: "/favicon.ico",

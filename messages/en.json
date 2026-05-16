@@ -1143,6 +1143,8 @@
   "settings_social_icon": "Icon",
   "settings_social_label_ph": "Display name",
   "settings_social_custom": "Custom",
+  "settings_social_hide": "Hide this link",
+  "settings_social_show": "Show this link",
   "settings_site_field_favicon_svg": "Favicon SVG",
   "settings_site_field_favicon_ico": "Favicon ICO",
   "settings_site_field_favicon_96": "Favicon 96x96",

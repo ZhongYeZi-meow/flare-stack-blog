@@ -18,6 +18,7 @@ export interface SocialLink {
   url: string;
   icon?: string; // R2 path, only for "custom"
   label?: string; // tooltip, only for "custom"
+  hidden?: boolean;
 }
 
 function QQIcon({

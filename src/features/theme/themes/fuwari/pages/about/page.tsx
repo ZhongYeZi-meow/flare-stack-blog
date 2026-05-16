@@ -74,7 +74,7 @@ export function AboutPage({
           </h2>
           <div className="flex flex-wrap gap-2">
             {social
-              .filter((item) => item.url)
+              .filter((item) => item.url && !item.hidden)
               .map((item, idx) => {
                 const platform = item.platform as SocialPlatform;
                 const preset =

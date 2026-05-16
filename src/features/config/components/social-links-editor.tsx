@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Eye, EyeOff, Plus, Trash2 } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { AssetUploadField } from "@/features/config/components/asset-upload-field";
@@ -10,7 +10,7 @@ import {
 import { m } from "@/paraglide/messages";
 
 export function SocialLinksEditor() {
-  const { register, control, watch } = useFormContext<SystemConfig>();
+  const { register, control, watch, setValue } = useFormContext<SystemConfig>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "site.social",
@@ -20,10 +20,11 @@ export function SocialLinksEditor() {
     <div className="space-y-3">
       {fields.map((field, index) => {
         const platform = watch(`site.social.${index}.platform`);
+        const hidden = watch(`site.social.${index}.hidden`);
         return (
           <div
             key={field.id}
-            className="flex flex-col gap-3 p-4 border border-border/30 rounded-lg bg-background/30"
+            className={`flex flex-col gap-3 p-4 border border-border/30 rounded-lg bg-background/30 transition-opacity ${hidden ? "opacity-50" : ""}`}
           >
             <div className="flex items-start gap-2 sm:gap-3">
               <select
@@ -42,9 +43,28 @@ export function SocialLinksEditor() {
               <div className="flex-1 min-w-0">
                 <Input
                   {...register(`site.social.${index}.url`)}
-                  placeholder={platform === "qq" ? "mqqapi://... 或 QQ号" : m.settings_social_url_ph()}
+                  placeholder={
+                    platform === "qq"
+                      ? "mqqapi://... 或 QQ号"
+                      : m.settings_social_url_ph()
+                  }
                 />
               </div>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setValue(`site.social.${index}.hidden`, !hidden, {
+                    shouldDirty: true,
+                  })
+                }
+                className="h-9 w-9 flex items-center justify-center shrink-0 text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted/50"
+                title={
+                  hidden ? m.settings_social_show() : m.settings_social_hide()
+                }
+              >
+                {hidden ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
 
               <button
                 type="button"

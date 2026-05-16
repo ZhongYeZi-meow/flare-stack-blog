@@ -61,21 +61,23 @@ export function AboutPage({
         <section className="mt-20 pt-10 border-t border-border/40">
           <h2 className="text-sm font-medium text-foreground mb-6">Social</h2>
           <div className="flex flex-wrap gap-4">
-            {social.map((item, idx) => (
-              <a
-                key={idx}
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-mono text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 group"
-              >
-                <span>{item.label ?? item.platform}</span>
-                <ArrowUpRight
-                  size={14}
-                  className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
-                />
-              </a>
-            ))}
+            {social
+              .filter((item) => item.url && !item.hidden)
+              .map((item, idx) => (
+                <a
+                  key={idx}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-mono text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 group"
+                >
+                  <span>{item.label ?? item.platform}</span>
+                  <ArrowUpRight
+                    size={14}
+                    className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
+                  />
+                </a>
+              ))}
           </div>
         </section>
       )}

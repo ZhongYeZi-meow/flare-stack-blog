@@ -7,6 +7,7 @@ export interface AboutPageProps {
     url: string;
     icon?: string;
     label?: string;
+    hidden?: boolean;
   }>;
   sections: Array<{
     title: string;

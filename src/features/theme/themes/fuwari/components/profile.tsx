@@ -35,7 +35,7 @@ export function Profile() {
         </div>
         <div className="flex flex-wrap gap-2 justify-center">
           {siteConfig.social
-            .filter((link) => link.url)
+            .filter((link) => link.url && !link.hidden)
             .map((link, i) => {
               const preset =
                 link.platform !== "custom"
@@ -49,8 +49,16 @@ export function Profile() {
                 <a
                   key={`${link.platform}-${i}`}
                   href={href}
-                  target={link.platform === "email" || link.platform === "qq" ? undefined : "_blank"}
-                  rel={link.platform === "email" || link.platform === "qq" ? undefined : "me noreferrer"}
+                  target={
+                    link.platform === "email" || link.platform === "qq"
+                      ? undefined
+                      : "_blank"
+                  }
+                  rel={
+                    link.platform === "email" || link.platform === "qq"
+                      ? undefined
+                      : "me noreferrer"
+                  }
                   aria-label={label}
                   className="fuwari-btn-regular rounded-lg h-10 w-10 active:scale-90 hover:text-(--fuwari-primary) transition-colors"
                 >

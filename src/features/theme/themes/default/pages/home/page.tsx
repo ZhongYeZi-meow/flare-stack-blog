@@ -58,7 +58,7 @@ export function HomePage({ posts, pinnedPosts }: HomePageProps) {
 
         <div className="flex items-center gap-6 text-muted-foreground">
           {siteConfig.social
-            .filter((link) => link.url)
+            .filter((link) => link.url && !link.hidden)
             .map((link, i) => {
               const preset =
                 link.platform !== "custom"
