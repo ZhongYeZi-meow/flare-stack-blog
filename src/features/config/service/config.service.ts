@@ -63,6 +63,7 @@ export function resolveSystemConfig(
     commentsEnabled: config?.commentsEnabled ?? DEFAULT_CONFIG.commentsEnabled,
     pages: {
       about: {
+        subtitle: config?.pages?.about?.subtitle,
         sections:
           config?.pages?.about?.sections ??
           DEFAULT_CONFIG.pages?.about?.sections,

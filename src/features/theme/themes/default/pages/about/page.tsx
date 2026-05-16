@@ -2,22 +2,37 @@ import { ArrowUpRight } from "lucide-react";
 import type { AboutPageProps } from "@/features/theme/contract/pages";
 import { m } from "@/paraglide/messages";
 
-export function AboutPage({ author, description, social, sections }: AboutPageProps) {
+export function AboutPage({
+  author,
+  description,
+  subtitle,
+  social,
+  sections,
+}: AboutPageProps) {
   return (
     <div className="w-full max-w-3xl mx-auto pb-20 px-6 md:px-0">
       <header className="py-12 md:py-20 space-y-6">
         <h1 className="text-4xl md:text-5xl font-serif font-medium tracking-tight text-foreground">
           {m.nav_about()}
         </h1>
-        <p className="max-w-xl text-base md:text-lg font-light text-muted-foreground leading-relaxed">
-          {description}
-        </p>
+        {subtitle ? (
+          <p className="max-w-xl text-base md:text-lg font-light text-muted-foreground leading-relaxed">
+            {subtitle}
+          </p>
+        ) : (
+          <p className="max-w-xl text-base md:text-lg font-light text-muted-foreground leading-relaxed">
+            {description}
+          </p>
+        )}
       </header>
 
       {sections.length > 0 ? (
         <div className="space-y-12">
           {sections.map((section, idx) => (
-            <section key={idx} className="border-b border-border/20 pb-10 last:border-b-0">
+            <section
+              key={idx}
+              className="border-b border-border/20 pb-10 last:border-b-0"
+            >
               {section.title && (
                 <h2 className="text-lg font-medium text-foreground mb-4">
                   {section.title}
