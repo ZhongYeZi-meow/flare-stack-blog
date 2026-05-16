@@ -17,6 +17,7 @@ export const getAboutPageConfigFn = createServerFn()
     const config = await ConfigService.getSystemConfig(context);
     return {
       subtitle: config.pages?.about?.subtitle ?? "",
+      showSocial: config.pages?.about?.showSocial ?? true,
       sections: config.pages?.about?.sections ?? [],
       commentsEnabled: config.commentsEnabled ?? true,
     };

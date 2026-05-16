@@ -53,6 +53,7 @@ export const SystemConfigSchema = z.object({
       about: z
         .object({
           subtitle: z.string().max(200).optional(),
+          showSocial: z.boolean().optional(),
           sections: z.array(AboutSectionSchema).optional(),
         })
         .optional(),
@@ -103,6 +104,7 @@ export const DEFAULT_CONFIG: SystemConfig = {
   newsletterEnabled: false,
   pages: {
     about: {
+      showSocial: true,
       sections: [],
     },
   },

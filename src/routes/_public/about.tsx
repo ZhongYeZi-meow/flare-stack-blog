@@ -27,7 +27,7 @@ function AboutPage() {
       author={siteConfig.author}
       description={siteConfig.description}
       subtitle={aboutConfig.subtitle}
-      social={siteConfig.social ?? []}
+      social={aboutConfig.showSocial ? (siteConfig.social ?? []) : []}
       sections={aboutConfig.sections}
     />
   );

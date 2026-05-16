@@ -1489,6 +1489,8 @@
   "admin_about_subtitle_label": "副标题",
   "admin_about_subtitle_ph": "显示在「关于」标题下方的一行简短介绍",
   "admin_about_subtitle_hint": "留空则不显示副标题，最多 200 字符。",
+  "admin_about_show_social": "显示社交链接区块",
+  "admin_about_show_social_hint": "在关于页底部展示社交链接，链接内容在「站点设置 → 社交链接」中管理。",
   "admin_about_section_title_label": "区块标题",
   "admin_about_section_title_ph": "如：关于我、联系方式、技能...",
   "admin_about_section_content_label": "内容",

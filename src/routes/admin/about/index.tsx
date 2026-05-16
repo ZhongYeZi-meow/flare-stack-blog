@@ -3,6 +3,7 @@ import { Check, Loader2, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import type { AboutSection } from "@/features/config/config.schema";
@@ -24,12 +25,14 @@ function RouteComponent() {
   const { settings, saveSettings, isLoading } = useSystemSetting();
   const [sections, setSections] = useState<AboutSection[]>([]);
   const [subtitle, setSubtitle] = useState("");
+  const [showSocial, setShowSocial] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (settings?.pages?.about) {
       setSections(settings.pages.about.sections ?? []);
       setSubtitle(settings.pages.about.subtitle ?? "");
+      setShowSocial(settings.pages.about.showSocial ?? true);
     }
   }, [settings]);
 
@@ -60,7 +63,7 @@ function RouteComponent() {
           ...settings,
           pages: {
             ...settings.pages,
-            about: { subtitle, sections },
+            about: { subtitle, showSocial, sections },
           },
         },
       });
@@ -120,6 +123,25 @@ function RouteComponent() {
           <p className="text-xs text-muted-foreground">
             {m.admin_about_subtitle_hint()}
           </p>
+        </div>
+      </div>
+
+      <div className="border border-border/30 bg-background/50 overflow-hidden">
+        <div className="p-6">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <Checkbox
+              checked={showSocial}
+              onCheckedChange={(checked) => setShowSocial(checked === true)}
+            />
+            <div>
+              <span className="text-sm font-medium text-foreground">
+                {m.admin_about_show_social()}
+              </span>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {m.admin_about_show_social_hint()}
+              </p>
+            </div>
+          </label>
         </div>
       </div>
 

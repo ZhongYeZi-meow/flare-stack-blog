@@ -64,6 +64,10 @@ export function resolveSystemConfig(
     pages: {
       about: {
         subtitle: config?.pages?.about?.subtitle,
+        showSocial:
+          config?.pages?.about?.showSocial ??
+          DEFAULT_CONFIG.pages?.about?.showSocial ??
+          true,
         sections:
           config?.pages?.about?.sections ??
           DEFAULT_CONFIG.pages?.about?.sections,
