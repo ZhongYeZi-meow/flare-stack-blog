@@ -1544,7 +1544,7 @@
   "newsletter_email_expiry": "This code expires in 10 minutes.",
   "newsletter_email_ignore": "If you didn't request this, please ignore this email.",
 
-  "admin_sidebar_series": "Series",
+  "admin_sidebar_series": "Series Manager",
   "series_manager_title": "Series",
   "series_manager_subtitle": "SERIES MANAGEMENT",
   "series_manager_search_placeholder": "Search series...",

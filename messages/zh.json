@@ -1536,7 +1536,7 @@
   "newsletter_email_expiry": "验证码 10 分钟内有效。",
   "newsletter_email_ignore": "如果你没有请求此操作，请忽略本邮件。",
 
-  "admin_sidebar_series": "系列",
+  "admin_sidebar_series": "系列管理",
   "series_manager_title": "系列管理",
   "series_manager_subtitle": "系列管理",
   "series_manager_search_placeholder": "搜索系列...",
