@@ -6,8 +6,10 @@ import {
   Image as ImageIcon,
   Info,
   LayoutDashboard,
+  Library,
   Link2,
   LogOut,
+  Mail,
   MessageSquare,
   Tag,
   User,
@@ -88,6 +90,12 @@ export function SideBar({
       exact: false,
     },
     {
+      path: "/admin/series",
+      icon: Library,
+      label: m.admin_sidebar_series(),
+      exact: false,
+    },
+    {
       path: "/admin/media",
       icon: ImageIcon,
       label: m.admin_sidebar_media(),
@@ -109,6 +117,12 @@ export function SideBar({
       path: "/admin/guestbook",
       icon: BookOpen,
       label: m.admin_sidebar_guestbook(),
+      exact: false,
+    },
+    {
+      path: "/admin/newsletter",
+      icon: Mail,
+      label: m.admin_sidebar_newsletter(),
       exact: false,
     },
     {

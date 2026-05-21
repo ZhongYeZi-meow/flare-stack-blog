@@ -7,6 +7,10 @@ export const getAllSeriesFn = createServerFn()
   .middleware([dbMiddleware])
   .handler(({ context }) => SeriesRepo.getAllSeries(context.db));
 
+export const getAllSeriesWithPostCountFn = createServerFn()
+  .middleware([dbMiddleware])
+  .handler(({ context }) => SeriesRepo.getAllSeriesWithPostCount(context.db));
+
 export const getSeriesWithPostsFn = createServerFn()
   .middleware([dbMiddleware])
   .inputValidator(z.object({ seriesId: z.number() }))

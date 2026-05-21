@@ -1,8 +1,25 @@
-import { asc, eq } from "drizzle-orm";
+import { asc, count, eq } from "drizzle-orm";
 import { PostsTable, SeriesTable } from "@/lib/db/schema";
 
 export async function getAllSeries(db: DB) {
   return await db.select().from(SeriesTable).orderBy(asc(SeriesTable.title));
+}
+
+export async function getAllSeriesWithPostCount(db: DB) {
+  return await db
+    .select({
+      id: SeriesTable.id,
+      title: SeriesTable.title,
+      slug: SeriesTable.slug,
+      description: SeriesTable.description,
+      createdAt: SeriesTable.createdAt,
+      updatedAt: SeriesTable.updatedAt,
+      postCount: count(PostsTable.id),
+    })
+    .from(SeriesTable)
+    .leftJoin(PostsTable, eq(PostsTable.seriesId, SeriesTable.id))
+    .groupBy(SeriesTable.id)
+    .orderBy(asc(SeriesTable.title));
 }
 
 export async function getSeriesById(db: DB, id: number) {
